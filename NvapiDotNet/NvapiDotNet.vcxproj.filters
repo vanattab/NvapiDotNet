@@ -30,6 +30,12 @@
     <ClInclude Include="NvDn_Structs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="NvDn_Handles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EnumHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NvapiDotNet.cpp">
@@ -39,6 +45,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnumHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

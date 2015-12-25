@@ -3,9 +3,11 @@
 #include "stdafx.h"
 #include "NvapiDotNet.h"
 
+
 //using namespace std;
 using namespace System;
 using namespace System::IO;
+using namespace System::Runtime::InteropServices;
 
 namespace NvapiDotNet {
 
@@ -14,9 +16,9 @@ namespace NvapiDotNet {
     // TODO: Add your methods for this class here.
   public:
     static NvDn_Status NvDn_Initialize() {
-#ifdef _DEBUG
+      #ifdef _DEBUG
       debugLogStream = File::AppendText("NvDn_Log.txt");
-#endif
+      #endif
       return nCall(NvAPI_Initialize());
     }
 
@@ -26,7 +28,7 @@ namespace NvapiDotNet {
 
 
     // *** Stereo Calls *** ///
-    static NvDn_STEREO_CAPS^ NvDn_GetStereoCaps(IntPtr^ hMon) {
+    static NvDn_STEREO_CAPS^ NvDn_GetStereoCaps(NvDn_MonitorHandle^ hMon) {
       NVAPI_STEREO_CAPS* nCaps = new NVAPI_STEREO_CAPS;
       NVAPI_STEREO_CAPS* nCaps2 = new NVAPI_STEREO_CAPS();
       NvDn_Status status = nCall(NvAPI_Stereo_GetStereoSupport((NvMonitorHandle)hMon->ToPointer(), nCaps));
@@ -37,12 +39,79 @@ namespace NvapiDotNet {
       return nCall(NvAPI_Stereo_Enable());
     }
 
+    static NvDn_Status NvDn_Stereo_Disable(){
+      return nCall(NvAPI_Stereo_Disable());
+    }
+
+    static NvDn_Status NvDn_Stereo_CaptureJpegImage(NvDn_StereoHandle^ sHand, unsigned int jpegQuality0to100){
+      return nCall(NvAPI_Stereo_CaptureJpegImage((StereoHandle)sHand->ToPointer(), jpegQuality0to100));
+    }
+
+    static NvDn_Status NvDn_Stereo_CapturePngImage(NvDn_StereoHandle^ sHand){
+      return nCall(NvAPI_Stereo_CapturePngImage((StereoHandle)sHand->ToPointer()));
+    }
+
+    //static NvDn_Status NvDn_Stereo_CreateHandleFromIUnknown(IUnknown* pDevice, NvDn_StereoHandle^* pStereoHand){
+    //  return nCall(NvAPI_Stereo_CreateHandleFromIUnknown(pDevice, pStereoHand));
+    //}
+
+    static NvDn_Status NvDn_Stereo_DestroyHandle(NvDn_StereoHandle^ sHand){
+      return nCall(NvAPI_Stereo_DestroyHandle((StereoHandle)sHand->ToPointer()));
+    }
+
+    static NvDn_Status NvDn_Stereo_Activate(NvDn_StereoHandle^ sHand){
+      return nCall(NvAPI_Stereo_Activate((StereoHandle)sHand->ToPointer()));
+    }
+    
+    static NvDn_Status NvDn_Stereo_Deactivate(NvDn_StereoHandle^ sHand){
+      return nCall(NvAPI_Stereo_Deactivate((StereoHandle)sHand->ToPointer()));
+    }
+    
+    static NvDn_Status NvDn_Stereo_Debug_WasLastDrawStereoized(NvDn_StereoHandle^ sHand, NvU8* wasStereo){
+      return nCall(NvAPI_Stereo_Debug_WasLastDrawStereoized((StereoHandle)sHand->ToPointer(), wasStereo));
+    }
+    
+    static NvDn_Status NvDn_StereoCreateConfigurationProfileRegistryKey(NV_STEREO_REGISTRY_PROFILE_TYPE regProType){
+      return nCall(NvAPI_Stereo_CreateConfigurationProfileRegistryKey(regProType));
+    }
+
+    static NvDn_Status NvDn_Stereo_InitActivation(NvDn_StereoHandle^ sHand, NVAPI_STEREO_INIT_ACTIVATION_FLAGS flags){
+      return nCall(NvAPI_Stereo_InitActivation((StereoHandle)sHand->ToPointer(), flags));
+    }
+
+    static NvDn_Status NvDn_Stereo_SetDriverMode(NV_STEREO_DRIVER_MODE mode){
+      return nCall(NvAPI_Stereo_SetDriverMode(mode));
+    }
+
+    static NvDn_Status NvDn_Stereo_IsEnabled(NvU8* isEnabled){
+      return nCall(NvAPI_Stereo_IsEnabled(isEnabled));
+    }
+
+    static NvDn_Status NvDn_Stereo_IsEnabled(Boolean^ isEnabled){
+      NvU8 result;
+      NvDn_Status status = nCall(NvAPI_Stereo_IsEnabled(&result));
+      if (result < 1)
+        isEnabled = false;
+      else
+        isEnabled = true;
+      return status;
+    }
+    
+    static NvDn_Status NvDn_Stereo_IsActivted(NvDn_StereoHandle^ sHand, NvU8* isActivated){
+      return nCall(NvAPI_Stereo_IsActivated((StereoHandle)sHand->ToPointer(), isActivated));
+    }
+
+    static NvDn_Status NvDn_Stereo_GetConvergence(NvDn_StereoHandle^ sHand, [Out]float^% pConvergence){
+      //return nCall(NvAPI_Stereo_GetConvergence((StereoHandle)sHand->ToPointer(), &pConvergence));
+      pConvergence = 5.0;
+      return nCall(NvAPI_Status::NVAPI_ACCESS_DENIED);
+    }
+
   private:
     static NvDn_Status nCall(NvAPI_Status nativeNvapiCall) {
-
-#ifdef _DEBUG
+#     ifdef _DEBUG
       debugLogStream->WriteLine(nativeNvapiCall);
-#endif
+#     endif
       return static_cast<NvDn_Status>(nativeNvapiCall);
     }
     static StreamWriter^ debugLogStream;
