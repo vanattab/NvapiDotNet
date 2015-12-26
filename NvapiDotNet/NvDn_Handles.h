@@ -34,3 +34,6 @@ public ref class NvDn_SourceHandle : NvDn_Handle{};
 public ref class NvDn_TargetHandle : NvDn_Handle{};
 public ref class NvDn_NVDX_SwapChainHandle : NvDn_Handle{};
 
+// End NvDn Handles
+
+
