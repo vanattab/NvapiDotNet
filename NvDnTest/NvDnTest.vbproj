@@ -130,5 +130,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NvapiDotNet\NvapiDotNet.vcxproj">
+      <Project>{f973953b-2b28-42df-9349-d16b4d7f3002}</Project>
+      <Name>NvapiDotNet</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
