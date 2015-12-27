@@ -150,6 +150,7 @@
     <ClInclude Include="NvapiDotNet.h" />
     <ClInclude Include="NvDn_Enums.h" />
     <ClInclude Include="NvDn_Handles.h" />
+    <ClInclude Include="NvDn_Stereo.h" />
     <ClInclude Include="NvDn_Structs.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />

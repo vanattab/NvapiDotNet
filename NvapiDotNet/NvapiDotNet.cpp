@@ -67,8 +67,11 @@ namespace NvapiDotNet {
       return nCall(NvAPI_Stereo_Deactivate((StereoHandle)sHand->ToPointer()));
     }
     
-    static NvDn_Status NvDn_Stereo_Debug_WasLastDrawStereoized(NvDn_StereoHandle^ sHand, NvU8* wasStereo){
-      return nCall(NvAPI_Stereo_Debug_WasLastDrawStereoized((StereoHandle)sHand->ToPointer(), wasStereo));
+    static NvDn_Status NvDn_Stereo_Debug_WasLastDrawStereoized(NvDn_StereoHandle^ sHand, Byte% wasStereo){
+      NvU8 val;
+      NvDn_Status status = nCall(NvAPI_Stereo_Debug_WasLastDrawStereoized((StereoHandle)sHand->ToPointer(), &val));
+      wasStereo = val;
+      return status;
     }
     
     static NvDn_Status NvDn_StereoCreateConfigurationProfileRegistryKey(NV_STEREO_REGISTRY_PROFILE_TYPE regProType){
@@ -97,14 +100,18 @@ namespace NvapiDotNet {
       return status;
     }
     
-    static NvDn_Status NvDn_Stereo_IsActivted(NvDn_StereoHandle^ sHand, NvU8* isActivated){
-      return nCall(NvAPI_Stereo_IsActivated((StereoHandle)sHand->ToPointer(), isActivated));
+    static NvDn_Status NvDn_Stereo_IsActivted(NvDn_StereoHandle^ sHand, Byte% isActivated){
+      NvU8 val;
+      NvDn_Status status = nCall(NvAPI_Stereo_IsActivated((StereoHandle)sHand->ToPointer(), &val));
+      isActivated = val;
+      return status;
     }
 
-    static NvDn_Status NvDn_Stereo_GetConvergence(NvDn_StereoHandle^ sHand, [Out]float^% pConvergence){
-      //return nCall(NvAPI_Stereo_GetConvergence((StereoHandle)sHand->ToPointer(), &pConvergence));
-      pConvergence = 5.0;
-      return nCall(NvAPI_Status::NVAPI_ACCESS_DENIED);
+    static NvDn_Status NvDn_Stereo_GetConvergence(NvDn_StereoHandle^ sHand, float% pConvergence){
+      float nConverge;
+      NvDn_Status status =  nCall(NvAPI_Stereo_GetConvergence((StereoHandle)sHand->ToPointer(), &nConverge));
+      pConvergence = nConverge;
+      return status;
     }
 
   private:
