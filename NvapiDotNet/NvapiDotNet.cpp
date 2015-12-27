@@ -101,10 +101,9 @@ namespace NvapiDotNet {
       return nCall(NvAPI_Stereo_IsActivated((StereoHandle)sHand->ToPointer(), isActivated));
     }
 
-    static NvDn_Status NvDn_Stereo_GetConvergence(NvDn_StereoHandle^ sHand, [Out]float^% pConvergence){
-      //return nCall(NvAPI_Stereo_GetConvergence((StereoHandle)sHand->ToPointer(), &pConvergence));
-      pConvergence = 5.0;
-      return nCall(NvAPI_Status::NVAPI_ACCESS_DENIED);
+    static NvDn_Status NvDn_Stereo_GetConvergence(NvDn_StereoHandle^ sHand, System::Single% pConvergence){
+      float*
+        NvDn_Status status = nCall(NvAPI_Stereo_GetConvergence()
     }
 
   private:
