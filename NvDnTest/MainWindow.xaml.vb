@@ -7,6 +7,9 @@ Class MainWindow
     Dim sHand As New NvDn_StereoHandle()
     Dim val As Single = 99
     NvDn.NvDn_Stereo_GetConvergence(sHand, val)
+    Dim cval As Byte
+    NvDn.NvDn_Stereo_IsActivted(sHand, cval)
+    NvDn.NvDn_Stereo_InitActivation(sHand, _NVAPI_STEREO_INIT_ACTIVATION_FLAGS)
     MsgBox(val)
     Console.WriteLine(b)
     Console.WriteLine(EnumHelper.GetDesciption(NvDn_Status.NVAPI_OK))
