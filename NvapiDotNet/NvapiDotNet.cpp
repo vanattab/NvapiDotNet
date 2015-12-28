@@ -2,6 +2,7 @@
 
 #include "stdafx.h"
 #include "NvapiDotNet.h"
+#include "NvDn_Stereo.h"
 
 
 //using namespace std;
@@ -28,7 +29,9 @@ namespace NvapiDotNet {
 
 
     // *** Stereo Calls *** ///
-    static NvDn_STEREO_CAPS^ NvDn_GetStereoCaps(NvDn_MonitorHandle^ hMon) {
+
+
+    static NvDn_STEREO_CAPS^ NvDn_Stereo_GetStereoCaps(NvDn_MonitorHandle^ hMon) {
       NVAPI_STEREO_CAPS* nCaps = new NVAPI_STEREO_CAPS;
       NVAPI_STEREO_CAPS* nCaps2 = new NVAPI_STEREO_CAPS();
       NvDn_Status status = nCall(NvAPI_Stereo_GetStereoSupport((NvMonitorHandle)hMon->ToPointer(), nCaps));
@@ -51,9 +54,11 @@ namespace NvapiDotNet {
       return nCall(NvAPI_Stereo_CapturePngImage((StereoHandle)sHand->ToPointer()));
     }
 
-    //static NvDn_Status NvDn_Stereo_CreateHandleFromIUnknown(IUnknown* pDevice, NvDn_StereoHandle^* pStereoHand){
-    //  return nCall(NvAPI_Stereo_CreateHandleFromIUnknown(pDevice, pStereoHand));
-    //}
+    static NvDn_Status NvDn_Stereo_CreateHandleFromD3D_Device_Pointer(IntPtr^ pD3dDevice, NvDn_StereoHandle^ pStereoHand){
+     //return nCall(NvAPI_Stereo_CreateHandleFromIUnknown((IUnknown*)pD3dDevice->ToPointer(), (StereoHandle*)(pStereoHand->ToPointer())));
+     StereoHandle sHand;
+     return nCall(NvAPI_Stereo_CreateHandleFromIUnknown((IUnknown*)pD3dDevice->ToPointer(), &sHand));
+    }
 
     static NvDn_Status NvDn_Stereo_DestroyHandle(NvDn_StereoHandle^ sHand){
       return nCall(NvAPI_Stereo_DestroyHandle((StereoHandle)sHand->ToPointer()));
@@ -74,20 +79,31 @@ namespace NvapiDotNet {
       return status;
     }
     
-    static NvDn_Status NvDn_StereoCreateConfigurationProfileRegistryKey(NV_STEREO_REGISTRY_PROFILE_TYPE regProType){
-      return nCall(NvAPI_Stereo_CreateConfigurationProfileRegistryKey(regProType));
+    static NvDn_Status NvDn_Stereo_CreateConfigurationProfileRegistryKey(NvDn_STEREO_REGISTRY_PROFILE_TYPE regProType){
+      return nCall(NvAPI_Stereo_CreateConfigurationProfileRegistryKey((NV_STEREO_REGISTRY_PROFILE_TYPE)regProType));
     }
 
-    static NvDn_Status NvDn_Stereo_InitActivation(NvDn_StereoHandle^ sHand, NVAPI_STEREO_INIT_ACTIVATION_FLAGS flags){
-      return nCall(NvAPI_Stereo_InitActivation((StereoHandle)sHand->ToPointer(), flags));
+    static NvDn_Status NvDn_Stereo_DeleteConfigurationProfileRegistryKey(NvDn_STEREO_REGISTRY_PROFILE_TYPE regProType){
+     return nCall(NvAPI_Stereo_DeleteConfigurationProfileRegistryKey((NV_STEREO_REGISTRY_PROFILE_TYPE)regProType));
+    }
+
+    static NvDn_Status NvDn_Stereo_SetConfigurationProfileValue(NvDn_STEREO_REGISTRY_PROFILE_TYPE regProType, NV_STEREO_REGISTRY_ID valueRegistryID, IntPtr pValue){
+     return nCall(NvAPI_Stereo_SetConfigurationProfileValue((NV_STEREO_REGISTRY_PROFILE_TYPE)regProType, valueRegistryID, pValue.ToPointer()));
+    }
+
+    static NvDn_Status NvDn_Stereo_InitActivation(NvDn_StereoHandle^ sHand, NvDn_STEREO_INIT_ACTIVATION_FLAGS flags){
+      return nCall(NvAPI_Stereo_InitActivation((StereoHandle)sHand->ToPointer(), (NVAPI_STEREO_INIT_ACTIVATION_FLAGS) flags));
     }
 
     static NvDn_Status NvDn_Stereo_SetDriverMode(NV_STEREO_DRIVER_MODE mode){
       return nCall(NvAPI_Stereo_SetDriverMode(mode));
     }
 
-    static NvDn_Status NvDn_Stereo_IsEnabled(NvU8* isEnabled){
-      return nCall(NvAPI_Stereo_IsEnabled(isEnabled));
+    static NvDn_Status NvDn_Stereo_IsEnabled(Byte%  isEnabled){
+     NvU8 val;
+     NvDn_Status status = nCall(NvAPI_Stereo_IsEnabled(&val));
+      isEnabled = val;
+      return status;
     }
 
     static NvDn_Status NvDn_Stereo_IsEnabled(Boolean^ isEnabled){

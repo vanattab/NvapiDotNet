@@ -3,8 +3,9 @@
 // but are changed infrequently
 
 #pragma once
-//#define _D3D9_H_
+
 #include <Windows.h>
+#include "d3d9.h"
 #include "nvapi.h"
 
 #include "NvDn_Handles.h"
