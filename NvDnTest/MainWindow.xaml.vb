@@ -1,37 +1,40 @@
 ﻿Imports NvapiDotNet
-Imports AutomatedVisionTest.Graphics
-Imports AutomatedVisionTest.Calibration
-Imports System.Drawing
-Imports System.Threading
+Imports SlimDX.Direct3D9
+
 
 Class MainWindow
-  Private Sub Button_Click(sender As Object, e As RoutedEventArgs)
-    Dim dispS As New DisplaySettings("Test", 50, 25, 1920, 1080, 1000, StereoProtocol.Nvidia_3DVision)
-    Dim display As New Display("Test", "Null", 1, dispS)
-    Dim dc As DisplayConfiguration = DisplayConfiguration.CreateSingleDisplayConfiguration(display)
-    dc.StereoMode = StereoProtocol.Nvidia_3DVision
-    Dim dw As New DisplayWindow(dc)
+  Private Device As Device
+  Private D3D As Direct3D
+  Private pp As PresentParameters
 
-    Dim dThread As New Thread(AddressOf dw.StartDisplay)
-    dThread.Start()
-    dw.WaitForInitialization()
+
+  Private Sub Button_Click(sender As Object, e As RoutedEventArgs)
+
+    Dim CanvasSource As Interop.HwndSource = Interop.HwndSource.FromVisual(mCanvas1)
+    pp = New PresentParameters
+    pp.Windowed = True
+    pp.BackBufferWidth = 400
+    pp.BackBufferHeight = 400
+    pp.DeviceWindowHandle = CanvasSource.Handle
+    D3D = New Direct3D
+
+    Device = New Device(D3D, 0, DeviceType.Hardware, CanvasSource.Handle, CreateFlags.HardwareVertexProcessing, pp)
 
     NvCall(NvDn.NvDn_Initialize(), "Initialize() -> ")
     NvCall(NvDn.NvDn_Stereo_Enable(), "Stereo_Enable() -> ")
 
     Console.WriteLine("Monitors: ")
-    For i As Integer = 0 To dw.D3D_9.AdapterCount - 1
+    For i As Integer = 0 To D3D.AdapterCount - 1
       Console.WriteLine("Mon: " & i)
-      Dim caps As NvDn_STEREO_CAPS = NvDn.NvDn_Stereo_GetStereoCaps(New NvDn_MonitorHandle(dw.D3D_9.GetAdapterMonitor(i)))
+      Dim caps As NvDn_STEREO_CAPS = NvDn.NvDn_Stereo_GetStereoCaps(New NvDn_MonitorHandle(D3D.GetAdapterMonitor(i)))
       Console.WriteLine("Version: " & caps.version & vbNewLine & "SupportStereoAutomatic: " & caps.supportWindowedModeAutomatic &
                         "SupportsStereoOff: " & caps.supportWindowedModeOff & "SupportsStereoPersistent: " & caps.supportsWindowedModePersistent)
       Console.WriteLine("")
     Next
 
-    AutomatedVisionTest.Util.wait(3000)
 
     Dim sHand As New NvDn_StereoHandle()
-    NvCall(NvDn.NvDn_Stereo_CreateHandleFromD3D_Device_Pointer(dw.Device.ComPointer, sHand), "Stereo_CreateHandleFromIUnknown")
+    NvCall(NvDn.NvDn_Stereo_CreateHandleFromD3D_Device_Pointer(Device.ComPointer, sHand), "Stereo_CreateHandleFromIUnknown")
 
     'Dim b As Boolean
     'NvDn.NvDn_Stereo_IsEnabled(b)
@@ -52,9 +55,11 @@ Class MainWindow
       kb.Acquire()
 
       While Not kb.GetCurrentState.IsPressed(SlimDX.DirectInput.Key.Escape)
+        Device.ColorFill(Device.GetBackBuffer(0, 0), New SlimDX.Color4(0, 0, 128))
       End While
-      dw.ShutDownDisplay = True
     End Using
+    Device.Dispose()
+    D3D.Dispose()
     'Application.Current.MainWindow.Close()
   End Sub
 
