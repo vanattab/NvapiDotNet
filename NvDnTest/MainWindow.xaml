@@ -3,7 +3,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="MainWindow" Height="350" Width="525">
     <Grid>
-    <Button Content="Button" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+    <Button Content="Button" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+    <Button Content="Activate Stereo
+            " HorizontalAlignment="Left" Margin="10,262,0,0" VerticalAlignment="Top" Width="111" RenderTransformOrigin="0.17,-1.26" Click="Button_Click_1"/>
+    <Button Content="Deactivate Stereo" HorizontalAlignment="Left" Margin="11,289,0,0" VerticalAlignment="Top" Width="110" Click="Button_Click_2"/>
 
   </Grid>
 </Window>

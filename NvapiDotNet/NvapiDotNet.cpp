@@ -54,10 +54,12 @@ namespace NvapiDotNet {
       return nCall(NvAPI_Stereo_CapturePngImage((StereoHandle)sHand->ToPointer()));
     }
 
-    static NvDn_Status NvDn_Stereo_CreateHandleFromD3D_Device_Pointer(IntPtr^ pD3dDevice, NvDn_StereoHandle^ pStereoHand){
+    static NvDn_Status NvDn_Stereo_CreateHandleFromD3D_Device_Pointer(IntPtr^ pD3dDevice, NvDn_StereoHandle^% pStereoHand){
      //return nCall(NvAPI_Stereo_CreateHandleFromIUnknown((IUnknown*)pD3dDevice->ToPointer(), (StereoHandle*)(pStereoHand->ToPointer())));
      StereoHandle sHand;
-     return nCall(NvAPI_Stereo_CreateHandleFromIUnknown((IUnknown*)pD3dDevice->ToPointer(), &sHand));
+     NvDn_Status status = nCall(NvAPI_Stereo_CreateHandleFromIUnknown((IUnknown*)pD3dDevice->ToPointer(), &sHand));
+     pStereoHand = gcnew NvDn_StereoHandle(sHand);
+     return status;
     }
 
     static NvDn_Status NvDn_Stereo_DestroyHandle(NvDn_StereoHandle^ sHand){
@@ -69,7 +71,8 @@ namespace NvapiDotNet {
     }
     
     static NvDn_Status NvDn_Stereo_Deactivate(NvDn_StereoHandle^ sHand){
-      return nCall(NvAPI_Stereo_Deactivate((StereoHandle)sHand->ToPointer()));
+     void* sH = sHand->ToPointer();
+      return nCall(NvAPI_Stereo_Deactivate(sH));
     }
     
     static NvDn_Status NvDn_Stereo_Debug_WasLastDrawStereoized(NvDn_StereoHandle^ sHand, Byte% wasStereo){

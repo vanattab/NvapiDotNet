@@ -4,7 +4,11 @@ Imports AutomatedVisionTest.Calibration
 Imports System.Drawing
 Imports System.Threading
 
+
 Class MainWindow
+  Public sHand As NvDn_StereoHandle
+  Public monHands() As IntPtr
+
   Private Sub Button_Click(sender As Object, e As RoutedEventArgs)
     Dim dispS As New DisplaySettings("Test", 50, 25, 1920, 1080, 1000, StereoProtocol.Nvidia_3DVision)
     Dim display As New Display("Test", "Null", 1, dispS)
@@ -17,20 +21,20 @@ Class MainWindow
     dw.WaitForInitialization()
 
     NvCall(NvDn.NvDn_Initialize(), "Initialize() -> ")
-    NvCall(NvDn.NvDn_Stereo_Enable(), "Stereo_Enable() -> ")
+    'NvCall(NvDn.NvDn_Stereo_Enable(), "Stereo_Enable() -> ")
 
     Console.WriteLine("Monitors: ")
+    ReDim monHands(dw.D3D_9.AdapterCount - 1)
     For i As Integer = 0 To dw.D3D_9.AdapterCount - 1
       Console.WriteLine("Mon: " & i)
-      Dim caps As NvDn_STEREO_CAPS = NvDn.NvDn_Stereo_GetStereoCaps(New NvDn_MonitorHandle(dw.D3D_9.GetAdapterMonitor(i)))
+      monHands(i) = dw.D3D_9.GetAdapterMonitor(i)
+      Dim caps As NvDn_STEREO_CAPS = NvDn.NvDn_Stereo_GetStereoCaps(New NvDn_MonitorHandle(monHands(i)))
       Console.WriteLine("Version: " & caps.version & vbNewLine & "SupportStereoAutomatic: " & caps.supportWindowedModeAutomatic &
                         "SupportsStereoOff: " & caps.supportWindowedModeOff & "SupportsStereoPersistent: " & caps.supportsWindowedModePersistent)
       Console.WriteLine("")
     Next
 
-    AutomatedVisionTest.Util.wait(3000)
-
-    Dim sHand As New NvDn_StereoHandle()
+    sHand = New NvDn_StereoHandle()
     NvCall(NvDn.NvDn_Stereo_CreateHandleFromD3D_Device_Pointer(dw.Device.ComPointer, sHand), "Stereo_CreateHandleFromIUnknown")
 
     'Dim b As Boolean
@@ -52,13 +56,24 @@ Class MainWindow
       kb.Acquire()
 
       While Not kb.GetCurrentState.IsPressed(SlimDX.DirectInput.Key.Escape)
+        AutomatedVisionTest.Util.wait(50)
       End While
       dw.ShutDownDisplay = True
     End Using
     'Application.Current.MainWindow.Close()
   End Sub
 
+
+
   Private Sub NvCall(status As NvDn_Status, Optional prefix As String = "")
     Console.WriteLine(prefix & EnumHelper.GetDesciption(status))
+  End Sub
+
+  Private Sub Button_Click_1(sender As Object, e As RoutedEventArgs)
+    NvCall(NvDn.NvDn_Stereo_Activate(sHand))
+  End Sub
+
+  Private Sub Button_Click_2(sender As Object, e As RoutedEventArgs)
+    NvCall(NvDn.NvDn_Stereo_Deactivate(sHand))
   End Sub
 End Class
