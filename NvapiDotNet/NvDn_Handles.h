@@ -14,9 +14,9 @@ public:
    nHandle = gcnew IntPtr(hand);
   }
 
-  operator StereoHandle(){
-   return nHandle->ToPointer();
-  }
+
+
+
 
   void* ToPointer(){
     return nHandle->ToPointer();
@@ -27,12 +27,20 @@ public:
  NvDn_StereoHandle(){}
  NvDn_StereoHandle(IntPtr^ iPtr) : NvDn_Handle(iPtr){}
  NvDn_StereoHandle(void* hand) : NvDn_Handle(hand){}
+ 
+ operator StereoHandle(){
+  return nHandle->ToPointer();
+ }
 };
 public ref class NvDn_DisplayHandle : NvDn_Handle{
 public: 
  NvDn_DisplayHandle(){}
  NvDn_DisplayHandle(IntPtr^ iPtr) : NvDn_Handle(iPtr){}
  NvDn_DisplayHandle(void* hand) : NvDn_Handle(hand){}
+
+ operator NvDisplayHandle(){
+  return (NvDisplayHandle)nHandle->ToPointer();
+ }
 };
 public ref class NvDn_MonitorHandle : NvDn_Handle{
 public: 
@@ -45,6 +53,10 @@ public:
  NvDn_UnAttachedDisplayHandle(){}
  NvDn_UnAttachedDisplayHandle(IntPtr^ iPtr) : NvDn_Handle(iPtr){}
  NvDn_UnAttachedDisplayHandle(void* hand) : NvDn_Handle(hand){}
+
+ operator NvUnAttachedDisplayHandle(){
+  return (NvUnAttachedDisplayHandle)nHandle->ToPointer();
+ }
  };
 public ref class NvDn_LogicalGpuHandle : NvDn_Handle{
 public:

@@ -67,7 +67,7 @@ namespace NvapiDotNet {
     }
 
     static NvDn_Status NvDn_Stereo_Activate(NvDn_StereoHandle^ sHand){
-      return nCall(NvAPI_Stereo_Activate((StereoHandle)sHand->ToPointer()));
+      return nCall(NvAPI_Stereo_Activate(sHand));
     }
     
     static NvDn_Status NvDn_Stereo_Deactivate(NvDn_StereoHandle^ sHand){
@@ -109,16 +109,6 @@ namespace NvapiDotNet {
       return status;
     }
 
-    static NvDn_Status NvDn_Stereo_IsEnabled(Boolean^ isEnabled){
-      NvU8 result;
-      NvDn_Status status = nCall(NvAPI_Stereo_IsEnabled(&result));
-      if (result < 1)
-        isEnabled = false;
-      else
-        isEnabled = true;
-      return status;
-    }
-    
     static NvDn_Status NvDn_Stereo_IsActivted(NvDn_StereoHandle^ sHand, Byte% isActivated){
       NvU8 val;
       NvDn_Status status = nCall(NvAPI_Stereo_IsActivated((StereoHandle)sHand->ToPointer(), &val));
@@ -132,6 +122,64 @@ namespace NvapiDotNet {
       pConvergence = nConverge;
       return status;
     }
+
+
+
+    //Display CALLS
+    static void NvDnTestCodeFunction(){
+     //NvAPI_CreateDisplayFromUnAttachedDisplay(NvUnAttachedDisplayHandle hNvUnattachedDisplay, NvDisplayHandle* pNvDisplay);
+     //NvAPI_D3D9_AliasSurfaceAsTexture(IDirect3DDevice9* pDev, IDirect3DSurface9 *pSurface, IDirect3DTexture9 **ppTexture, DWORD dwFlag);
+     //NvAPI_Disp_ColorControl(NvU32 displayID, );
+     //NvAPI_DISP_DeleteCustomDisplay(NvU32, NVU32, NV_CUSTOM_DISPLAY*);
+     //NvAPI_DISP_EnumCustomDisplay(NvU32, NVU32, NV_CUSTOM_DISPLAY* pNvDisp);
+     //NvAPI_DISP_GetAssociatedUnAttachedNvidiaDisplayHandle(const char* szDisplayName, NvUnAttachedDisplayHandle* p);
+     //NvAPI_DISP_GetDisplayConfig(NvU32* PathInfoCount, NV_DISPLAYCONFIG_PATH_INFO *PINFO);
+     //NvAPI_DISP_GetDisplayIdByDisplayName(const char* displayName, NvU32 *displayID);
+     //NvAPI_DISP_GetGDIPrimaryDisplayId(NvU32 * DisplayId);
+     //NvAPI_DISP_GetMonitorCapabilities;
+     //NvAPI_DISP_GetMonitorColorCapabilities;
+     //NvAPI_DISP_GetTiming;
+     //NvAPI_Disp_InfoFrameControl;
+     //NvAPI_DISP_RevertCustomDisplayTrial;
+     //NvAPI_DISP_SaveCustomDisplay;
+     //NvAPI_DISP_SetDisplayConfig;
+     //NvAPI_DISP_TryCustomDisplay;
+     NvUnAttachedDisplayHandle g;
+     NvUnAttachedDisplayHandle__* b;
+     NvUnAttachedDisplayHandle* c;
+    }
+
+
+    // Non API CODED FUCNTION CALLS
+    static NvDn_Status NvDn_CreateDisplayFromUnAttachedDisplay(NvDn_UnAttachedDisplayHandle^ uadHand, NvDn_DisplayHandle^% dHand){
+     NvDisplayHandle nDispHand;
+     NvDn_Status status = nCall(NvAPI_CreateDisplayFromUnAttachedDisplay(uadHand, &nDispHand));
+     dHand = gcnew NvDn_DisplayHandle(nDispHand);
+     return status;
+    }
+    
+    static NvDn_Status NvDn_Disp_ColorControl(NvU32 displayID, NvDn_COLOR_DATA^% colorDataOut){
+     return nCall(NvAPI_Disp_ColorControl(displayID, colorDataOut->nColorData));
+     NvDn_Status s;
+     return s;
+     //return NvAPI_Status::NVAPI_ACCESS_DENIED;
+    }
+
+     //NvAPI_Disp_ColorControl(NvU32 displayID, );
+     //NvAPI_DISP_DeleteCustomDisplay(NvU32, NVU32, NV_CUSTOM_DISPLAY*);
+     //NvAPI_DISP_EnumCustomDisplay(NvU32, NVU32, NV_CUSTOM_DISPLAY* pNvDisp);
+     //NvAPI_DISP_GetAssociatedUnAttachedNvidiaDisplayHandle(const char* szDisplayName, NvUnAttachedDisplayHandle* p);
+     //NvAPI_DISP_GetDisplayConfig(NvU32* PathInfoCount, NV_DISPLAYCONFIG_PATH_INFO *PINFO);
+     //NvAPI_DISP_GetDisplayIdByDisplayName(const char* displayName, NvU32 *displayID);
+     //NvAPI_DISP_GetGDIPrimaryDisplayId(NvU32 * DisplayId);
+     //NvAPI_DISP_GetMonitorCapabilities;
+     //NvAPI_DISP_GetMonitorColorCapabilities;
+     //NvAPI_DISP_GetTiming;
+     //NvAPI_Disp_InfoFrameControl;
+     //NvAPI_DISP_RevertCustomDisplayTrial;
+     //NvAPI_DISP_SaveCustomDisplay;
+     //NvAPI_DISP_SetDisplayConfig;
+     //NvAPI_DISP_TryCustomDisplay; 
 
   private:
     static NvDn_Status nCall(NvAPI_Status nativeNvapiCall) {

@@ -1,5 +1,6 @@
 #pragma once
 #include"EnumHelper.h"
+
 //! InitActivation Flags
 public enum class NvDn_STEREO_INIT_ACTIVATION_FLAGS
 {
