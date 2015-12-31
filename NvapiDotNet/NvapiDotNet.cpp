@@ -195,6 +195,13 @@ namespace NvapiDotNet {
      return s;
     }
 
+    static NvDn_Status NvDn_Disp_GetMonitorCapabilities(NvU32 displayID, NvDn_MONITOR_CAPABILITIES^% caps){
+     NvDn_Status s = nCall(NvAPI_DISP_GetMonitorCapabilities(displayID, caps))
+      return s;
+    }
+
+    
+
      //NvAPI_Disp_ColorControl(NvU32 displayID, );
      //NvAPI_DISP_DeleteCustomDisplay(NvU32, NVU32, NV_CUSTOM_DISPLAY*);
      //NvAPI_DISP_EnumCustomDisplay(NvU32, NVU32, NV_CUSTOM_DISPLAY* pNvDisp);
