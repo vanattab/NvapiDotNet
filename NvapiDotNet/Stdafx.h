@@ -11,4 +11,10 @@
 #include "NvDn_Handles.h"
 #include "NvDn_Enums.h"
 #include "NvDn_Structs.h"
+//
+//generic<typename T> T nCast(NvU8 c){
+// return static_cast<T>(c);
+//}
+
+
 

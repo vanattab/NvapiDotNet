@@ -3,6 +3,7 @@
 #include "stdafx.h"
 #include "NvapiDotNet.h"
 #include "NvDn_Stereo.h"
+#include "NvDn_Disp.h"
 
 
 //using namespace std;
@@ -158,9 +159,40 @@ namespace NvapiDotNet {
     
     static NvDn_Status NvDn_Disp_ColorControl(NvU32 displayID, NvDn_COLOR_DATA^% colorDataOut){
      return nCall(NvAPI_Disp_ColorControl(displayID, colorDataOut->nColorData));
-     NvDn_Status s;
+    }
+
+
+    static NvDn_Status NvDn_EnumPhysicalGPUs(array<NvDn_PhysicalGpuHandle^>^% gpuArray){
+     NvPhysicalGpuHandle pHandles[NVAPI_MAX_PHYSICAL_GPUS];
+     NvU32 count;
+     NvDn_Status status = nCall(NvAPI_EnumPhysicalGPUs(pHandles, &count));
+     gpuArray = gcnew array < NvDn_PhysicalGpuHandle^ >(count);
+     for (int i = 0; i < count; i++)
+      gpuArray[i] = gcnew NvDn_PhysicalGpuHandle(pHandles[i]);
+     NvU32 id;
+     status = nCall(NvAPI_SYS_GetDisplayIdFromGpuAndOutputId(pHandles[0], 0, &id));
+     return status;
+    }
+
+    static NvDn_Status NvDn_SYS_GetDisplayIdFromGpuAndOutputId(NvDn_PhysicalGpuHandle^ phyHand, NvU32 outputID, NvU32^ displayID){
+     NvU32 id;
+     NvDn_Status status = nCall(NvAPI_SYS_GetDisplayIdFromGpuAndOutputId(phyHand, outputID, &id));
+     displayID = id;
+     return status;
+    }
+
+    static NvDn_Status NvDn_Disp_GetDisplayIdByDisplayName(String^ name, NvU32^ displayId){
+     NvU32 id;
+     NvDn_Status s =nCall( NvAPI_DISP_GetDisplayIdByDisplayName("\\DISPLAY1", &id));
+     displayId = id;
      return s;
-     //return NvAPI_Status::NVAPI_ACCESS_DENIED;
+    }
+
+    static NvDn_Status NvDn_Disp_GetGDIPrimaryDisplayId(NvU32^ displayID){
+     NvU32 id;
+     NvDn_Status s = nCall(NvAPI_DISP_GetGDIPrimaryDisplayId(&id));
+     displayID = id;
+     return s;
     }
 
      //NvAPI_Disp_ColorControl(NvU32 displayID, );

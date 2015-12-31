@@ -9,6 +9,18 @@ Class MainWindow
   Public sHand As NvDn_StereoHandle
   Public monHands() As IntPtr
 
+  Private Sub Button_Click_3(sender As Object, e As RoutedEventArgs)
+    Dim colorData As New NvDn_COLOR_DATA
+    Dim pGPUs As NvDn_PhysicalGpuHandle()
+    NvDn.NvDn_EnumPhysicalGPUs(pGPUs)
+    Dim valT As Int32
+    NvDn.NvDn_Disp_GetGDIPrimaryDisplayId(valT)
+    'NvDn.NvDn_Disp_GetDisplayIdByDisplayName("", valT)
+    'NvDn.NvDn_SYS_GetDisplayIdFromGpuAndOutputId(pGPUs(0), 0, valT)
+    Console.WriteLine(EnumHelper.GetDesciption(NvDn.NvDn_Disp_ColorControl(valT, colorData)))
+
+  End Sub
+
   Private Sub Button_Click(sender As Object, e As RoutedEventArgs)
     Dim dispS As New DisplaySettings("Test", 50, 25, 1920, 1080, 1000, StereoProtocol.Nvidia_3DVision)
     Dim display As New Display("Test", "Null", 1, dispS)
@@ -75,5 +87,10 @@ Class MainWindow
 
   Private Sub Button_Click_2(sender As Object, e As RoutedEventArgs)
     NvCall(NvDn.NvDn_Stereo_Deactivate(sHand))
+  End Sub
+
+  Private Sub MenuItem_Click(sender As Object, e As RoutedEventArgs)
+    Dim wrapperWin As New NvAPIWrapperGen()
+    wrapperWin.Show()
   End Sub
 End Class

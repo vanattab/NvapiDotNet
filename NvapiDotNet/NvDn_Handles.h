@@ -14,10 +14,6 @@ public:
    nHandle = gcnew IntPtr(hand);
   }
 
-
-
-
-
   void* ToPointer(){
     return nHandle->ToPointer();
   }
@@ -69,6 +65,9 @@ public:
  NvDn_PhysicalGpuHandle(){}
  NvDn_PhysicalGpuHandle(IntPtr^ iPtr) : NvDn_Handle(iPtr){}
  NvDn_PhysicalGpuHandle(void* hand) : NvDn_Handle(hand){}
+ operator NvPhysicalGpuHandle(){
+  return (NvPhysicalGpuHandle)nHandle->ToPointer();
+ }
 };
 
 public ref class NvDn_VisualComputingDeviceHandle : NvDn_Handle{

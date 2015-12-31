@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClInclude Include="EnumHelper.h" />
     <ClInclude Include="NvapiDotNet.h" />
+    <ClInclude Include="NvDn_Disp.h" />
     <ClInclude Include="NvDn_Enums.h" />
     <ClInclude Include="NvDn_Handles.h" />
     <ClInclude Include="NvDn_Stereo.h" />
