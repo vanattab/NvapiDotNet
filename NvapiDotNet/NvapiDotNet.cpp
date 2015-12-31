@@ -29,8 +29,6 @@ namespace NvapiDotNet {
 
 
     // *** Stereo Calls *** ///
-
-
     static NvDn_STEREO_CAPS^ NvDn_Stereo_GetStereoCaps(NvDn_MonitorHandle^ hMon) {
       NVAPI_STEREO_CAPS* nCaps = new NVAPI_STEREO_CAPS;
       NVAPI_STEREO_CAPS* nCaps2 = new NVAPI_STEREO_CAPS();
