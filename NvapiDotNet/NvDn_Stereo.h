@@ -10,7 +10,6 @@ public enum class NvDn_STEREO_INIT_ACTIVATION_FLAGS
   NVAPI_STEREO_INIT_ACTIVATION_DELAYED = 0x01,
 };
 
-
 //! Used in NvAPI_Stereo_CreateConfigurationProfileRegistryKey()
 public enum class NvDn_STEREO_REGISTRY_PROFILE_TYPE
 {

@@ -122,8 +122,6 @@ namespace NvapiDotNet {
       return status;
     }
 
-
-
     //Display CALLS
     static void NvDnTestCodeFunction(){
      //NvAPI_CreateDisplayFromUnAttachedDisplay(NvUnAttachedDisplayHandle hNvUnattachedDisplay, NvDisplayHandle* pNvDisplay);
@@ -188,7 +186,7 @@ namespace NvapiDotNet {
      return s;
     }
 
-    static NvDn_Status NvDn_Disp_GetGDIPrimaryDisplayId(NvU32^ displayID){
+    static NvDn_Status NvDn_Disp_GetGDIPrimaryDisplayId(NvU32^% displayID){
      NvU32 id;
      NvDn_Status s = nCall(NvAPI_DISP_GetGDIPrimaryDisplayId(&id));
      displayID = id;
@@ -196,11 +194,32 @@ namespace NvapiDotNet {
     }
 
     static NvDn_Status NvDn_Disp_GetMonitorCapabilities(NvU32 displayID, NvDn_MONITOR_CAPABILITIES^% caps){
-     NvDn_Status s = nCall(NvAPI_DISP_GetMonitorCapabilities(displayID, caps))
+     NvDn_Status s = nCall(NvAPI_DISP_GetMonitorCapabilities(displayID, caps));
       return s;
     }
 
-    
+    static void NvDn_TEST(){
+     NV_MONITOR_CONN_TYPE t;
+     NvAPI_Initialize();
+     NV_MONITOR_CAPABILITIES cData;
+     cData.version = NV_MONITOR_CAPABILITIES_VER;
+     NvU32 dispID;
+     NvAPI_Status s = NvAPI_DISP_GetGDIPrimaryDisplayId(&dispID);
+     //s = NvAPI_DISP_GetMonitorCapabilities(dispID, &cData);
+
+     NvU32 capsCount =0;
+     s= NvAPI_DISP_GetMonitorColorCapabilities(dispID, NULL, &capsCount);
+     NV_MONITOR_COLOR_CAPS* monColorCaps;
+     monColorCaps = new NV_MONITOR_COLOR_CAPS[capsCount];
+     for (int i = 0; i < capsCount; i++)
+      monColorCaps[i].version = NV_MONITOR_COLOR_CAPS_VER;
+     s= NvAPI_DISP_GetMonitorColorCapabilities(dispID, monColorCaps, &capsCount);
+
+     NV_MONITOR_COLOR_CAPS cap1 = monColorCaps[0];
+     NV_MONITOR_COLOR_CAPS cap2 = monColorCaps[1];
+     NV_MONITOR_COLOR_CAPS cap3 = monColorCaps[2];
+
+    }
 
      //NvAPI_Disp_ColorControl(NvU32 displayID, );
      //NvAPI_DISP_DeleteCustomDisplay(NvU32, NVU32, NV_CUSTOM_DISPLAY*);

@@ -10,32 +10,26 @@ public:
   NvDn_STEREO_CAPS(NVAPI_STEREO_CAPS* nvapiCaps){
     nCaps = nvapiCaps;
   }
-
   property NvU32 version {
     NvU32 get() { return nCaps->version;}
     void set(NvU32 value) {nCaps->version = value;}
   }
-
   property NvU32 supportWindowedModeOff {
     NvU32 get() { return nCaps->supportsWindowedModeOff; }
     void set(NvU32 value) { nCaps->supportsWindowedModeOff = value; }
   }
-
   property NvU32 supportWindowedModeAutomatic {
     NvU32 get() { return nCaps->supportsWindowedModeAutomatic; }
     void set(NvU32 value) { nCaps->supportsWindowedModeAutomatic = value; }
   }
-
   property NvU32 supportsWindowedModePersistent {
     NvU32 get() { return nCaps->supportsWindowedModePersistent; }
     void set(NvU32 value) { nCaps->supportsWindowedModePersistent = value; }
   }
-
   property NvU32 reserved {
     NvU32 get() { return nCaps->reserved; }
     void set(NvU32 value) { nCaps->reserved = value; }
   }
-
   property array<NvU32>^ reserved2 {
     array<NvU32>^ get() { 
       array<NvU32>^ returnVal = gcnew array<NvU32>(3);

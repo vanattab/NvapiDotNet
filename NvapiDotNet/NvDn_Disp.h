@@ -66,6 +66,7 @@ public:
  
  NvDn_COLOR_DATA(){
   nColorData = new NV_COLOR_DATA();
+  nColorData->version = NV_COLOR_DATA_VER;
  }
 
  NvDn_COLOR_DATA(NV_COLOR_DATA* NvAPIColorData){
@@ -120,32 +121,286 @@ public:
 
 };
 
+// MONITOR CAPS
+public ref class NvDn_MONITOR_CAPS_VCDB
+{
+public:
+ NV_MONITOR_CAPS_VCDB* nvapiNativePointer;
+
+ NvDn_MONITOR_CAPS_VCDB(){
+  nvapiNativePointer = new NV_MONITOR_CAPS_VCDB();
+ }
+
+ NvDn_MONITOR_CAPS_VCDB(NV_MONITOR_CAPS_VCDB* NvAPIColorData){
+  nvapiNativePointer = NvAPIColorData;
+ }
+
+ ~NvDn_MONITOR_CAPS_VCDB(){
+  if (nvapiNativePointer)
+   delete nvapiNativePointer;
+ }
+
+ !NvDn_MONITOR_CAPS_VCDB(){
+  if (nvapiNativePointer)
+   delete nvapiNativePointer;
+ }
+
+ operator NV_MONITOR_CAPS_VCDB*(){
+  return nvapiNativePointer;
+ }
+
+ property NvU8 quantizationRangeYcc{
+  NvU8 get(){ return  nvapiNativePointer->quantizationRangeYcc; }
+ }
+
+ property NvU8  quantizationRangeRgb {
+  NvU8 get(){ return nvapiNativePointer->quantizationRangeRgb; }
+  void set(NvU8 value) { nvapiNativePointer->quantizationRangeRgb = value; }
+ }
+
+ property  NvU8  scanInfoPreferredVideoFormat {
+  NvU8 get() { return nvapiNativePointer->scanInfoPreferredVideoFormat; }
+  void set(NvU8 value){ nvapiNativePointer->scanInfoPreferredVideoFormat = value; }
+ }
+
+ property NvU8 scanInfoITVideoFormats{
+  NvU8 get(){ return nvapiNativePointer->scanInfoITVideoFormats; }
+  void set(NvU8 value){ nvapiNativePointer->scanInfoITVideoFormats = value; }
+ }
+
+ property NvU8 scanInfoCEVideoFormats{
+  NvU8 get() { return nvapiNativePointer->scanInfoCEVideoFormats; }
+  void set(NvU8 value){ nvapiNativePointer->scanInfoCEVideoFormats = value; }
+ }
+
+};
+
+
+//! See NvAPI_DISP_GetMonitorCapabilities().
+public ref class NvDn_MONITOR_CAPS_VSDB
+{
+public:
+ NV_MONITOR_CAPS_VSDB* nvapiNativePointer;
+
+ NvDn_MONITOR_CAPS_VSDB(){
+  nvapiNativePointer = new NV_MONITOR_CAPS_VSDB();
+ }
+
+ NvDn_MONITOR_CAPS_VSDB(NV_MONITOR_CAPS_VSDB* NvAPIColorData){
+  nvapiNativePointer = NvAPIColorData;
+ }
+
+ ~NvDn_MONITOR_CAPS_VSDB(){
+  if (nvapiNativePointer)
+   delete nvapiNativePointer;
+ }
+
+ !NvDn_MONITOR_CAPS_VSDB(){
+  if (nvapiNativePointer)
+   delete nvapiNativePointer;
+ }
+
+ operator NV_MONITOR_CAPS_VSDB*(){
+  return  nvapiNativePointer;
+ }
+
+ property NvU8 sourcePhysicalAddressB{
+  NvU8 get(){ return nvapiNativePointer->sourcePhysicalAddressB; }
+  void set(NvU8 value){ nvapiNativePointer->sourcePhysicalAddressB = value; }
+ }
+ property NvU8 sourcePhysicalAddressA{
+  NvU8 get(){ return nvapiNativePointer->sourcePhysicalAddressA; }
+  void set(NvU8 value){ nvapiNativePointer->sourcePhysicalAddressA = value; }
+ }
+ property NvU8 sourcePhysicalAddressD{
+  NvU8 get(){ return nvapiNativePointer->sourcePhysicalAddressD; }
+  void set(NvU8 value){ nvapiNativePointer->sourcePhysicalAddressD = value; }
+ }
+ property NvU8 sourcePhysicalAddressC{
+  NvU8 get(){ return nvapiNativePointer->sourcePhysicalAddressC; }
+  void set(NvU8 value){ nvapiNativePointer->sourcePhysicalAddressC = value; }
+ }
+ property NvU8 supportDualDviOperation{
+  NvU8 get(){ return nvapiNativePointer->supportDualDviOperation; }
+  void set(NvU8 value){ nvapiNativePointer->supportDualDviOperation = value; }
+ }
+ property NvU8 reserved6{
+  NvU8 get(){ return nvapiNativePointer->reserved6; }
+  void set(NvU8 value){ nvapiNativePointer->reserved6 = value; }
+ }
+ property NvU8 supportDeepColorYCbCr444{
+  NvU8 get(){ return nvapiNativePointer->supportDeepColorYCbCr444; }
+  void set(NvU8 value){ nvapiNativePointer->supportDeepColorYCbCr444 = value; }
+ }
+ property NvU8 supportDeepColor30bits{
+  NvU8 get(){ return nvapiNativePointer->supportDeepColor30bits; }
+  void set(NvU8 value){ nvapiNativePointer->supportDeepColor30bits = value; }
+ }
+ property NvU8 supportDeepColor36bits{
+  NvU8 get(){ return nvapiNativePointer->supportDeepColor36bits; }
+  void set(NvU8 value){ nvapiNativePointer->supportDeepColor36bits = value; }
+ }
+ property NvU8 supportDeepColor48bits{
+  NvU8 get(){ return nvapiNativePointer->supportDeepColor48bits; }
+  void set(NvU8 value){ nvapiNativePointer->supportDeepColor48bits = value; }
+ }
+ property NvU8 supportAI{
+  NvU8 get(){ return nvapiNativePointer->supportAI; }
+  void set(NvU8 value){ nvapiNativePointer->supportAI = value; }
+ }
+ property NvU8 maxTmdsClock{
+  NvU8 get(){ return nvapiNativePointer->maxTmdsClock; }
+  void set(NvU8 value){ nvapiNativePointer->maxTmdsClock = value; }
+ }
+ property NvU8 cnc0SupportGraphicsTextContent{
+  NvU8 get(){ return nvapiNativePointer->cnc0SupportGraphicsTextContent; }
+  void set(NvU8 value){ nvapiNativePointer->cnc0SupportGraphicsTextContent = value; }
+ }
+ property NvU8 cnc1SupportPhotoContent{
+  NvU8 get(){ return nvapiNativePointer->cnc1SupportPhotoContent; }
+  void set(NvU8 value){ nvapiNativePointer->cnc1SupportPhotoContent = value; }
+ }
+ property NvU8 cnc2SupportCinemaContent{
+  NvU8 get(){ return nvapiNativePointer->cnc2SupportCinemaContent; }
+  void set(NvU8 value){ nvapiNativePointer->cnc2SupportCinemaContent = value; }
+ }
+ property NvU8 cnc3SupportGameContent{
+  NvU8 get(){ return nvapiNativePointer->cnc3SupportGameContent; }
+  void set(NvU8 value){ nvapiNativePointer->cnc3SupportGameContent = value; }
+ }
+ property NvU8 reserved8{
+  NvU8 get(){ return nvapiNativePointer->reserved8; }
+  void set(NvU8 value){ nvapiNativePointer->reserved8 = value; }
+ }
+ property NvU8 hasVicEntries{
+  NvU8 get(){ return nvapiNativePointer->hasVicEntries; }
+  void set(NvU8 value){ nvapiNativePointer->hasVicEntries = value; }
+ }
+ property NvU8 hasInterlacedLatencyField{
+  NvU8 get(){ return nvapiNativePointer->hasInterlacedLatencyField; }
+  void set(NvU8 value){ nvapiNativePointer->hasInterlacedLatencyField = value; }
+ }
+ property NvU8 hasLatencyField{
+  NvU8 get(){ return nvapiNativePointer->hasLatencyField; }
+  void set(NvU8 value){ nvapiNativePointer->hasLatencyField = value; }
+ }
+ property NvU8 videoLatency{
+  NvU8 get(){ return nvapiNativePointer->videoLatency; }
+  void set(NvU8 value){ nvapiNativePointer->videoLatency = value; }
+ }
+ property NvU8 audioLatency{
+  NvU8 get(){ return nvapiNativePointer->audioLatency; }
+  void set(NvU8 value){ nvapiNativePointer->audioLatency = value; }
+ }
+ property NvU8 interlacedVideoLatency{
+  NvU8 get(){ return nvapiNativePointer->interlacedVideoLatency; }
+  void set(NvU8 value){ nvapiNativePointer->interlacedVideoLatency = value; }
+ }
+ property NvU8 interlacedAudioLatency{
+  NvU8 get(){ return nvapiNativePointer->interlacedAudioLatency; }
+  void set(NvU8 value){ nvapiNativePointer->interlacedAudioLatency = value; }
+ }
+ property NvU8 reserved13{
+  NvU8 get(){ return nvapiNativePointer->reserved13; }
+  void set(NvU8 value){ nvapiNativePointer->reserved13 = value; }
+ }
+ property NvU8 has3dEntries{
+  NvU8 get(){ return nvapiNativePointer->has3dEntries; }
+  void set(NvU8 value){ nvapiNativePointer->has3dEntries = value; }
+ }
+ property NvU8 hdmi3dLength{
+  NvU8 get(){ return nvapiNativePointer->hdmi3dLength; }
+  void set(NvU8 value){ nvapiNativePointer->hdmi3dLength = value; }
+ }
+ property NvU8 hdmiVicLength{
+  NvU8 get(){ return nvapiNativePointer->hdmiVicLength; }
+  void set(NvU8 value){ nvapiNativePointer->hdmiVicLength = value; }
+ }
+ property array<NvU8>^ hdmi_vic{
+  array<NvU8>^ get(){
+   array<NvU8>^ rVal = gcnew array<NvU8>(7);
+   for (int i = 0; i < 7; i++)
+    rVal[i] = nvapiNativePointer->hdmi_vic[i];
+   return rVal;
+  }
+  void set(array<NvU8>^ value){ 
+   for (int i = 0; i < 7; i++)
+    nvapiNativePointer->hdmi_vic[i] = value[i];
+  }
+ }
+ property array<NvU8>^ hdmi_3d{
+  array<NvU8>^ get(){ 
+   array<NvU8>^ rVal = gcnew array<NvU8>(31);
+   for (int i=0;i<31;i++)
+    rVal[i] = nvapiNativePointer->hdmi_3d[i];
+   return rVal;
+  }
+  void set(array<NvU8>^ value){ 
+   for (int i = 0; i < 31;i++)
+    nvapiNativePointer->hdmi_3d[i] = value[i]; }
+ }
+};
+
 public ref class NvDn_MONITOR_CAPABILITIES{
 public:
- NV_MONITOR_CAPABILITIES* nCaps;
+
+ NV_MONITOR_CAPABILITIES* nvapiNativeType;
  NvDn_MONITOR_CAPABILITIES(NV_MONITOR_CAPABILITIES* nvapiCaps){
-  nCaps = nvapiCaps;
+  nvapiNativeType = nvapiCaps;
  }
 
  NvDn_MONITOR_CAPABILITIES(){
-  nCaps = new NV_MONITOR_CAPABILITIES();
+  nvapiNativeType = new NV_MONITOR_CAPABILITIES();
+  nvapiNativeType->version = NV_MONITOR_CAPABILITIES_VER;
  }
 
-
  ~NvDn_MONITOR_CAPABILITIES(){
-  if (nCaps)
-   delete nCaps;
+  if (nvapiNativeType)
+   delete nvapiNativeType;
  }
 
  !NvDn_MONITOR_CAPABILITIES(){
-  if (nCaps)
-   delete nCaps;
+  if (nvapiNativeType)
+   delete nvapiNativeType;
  }
 
  operator NV_MONITOR_CAPABILITIES*(){
-  return nCaps;
+  return nvapiNativeType;
  }
 
- property 
- 
+ property NvU32 version {
+  NvU32 get() { return nvapiNativeType->version; }
+  void set(NvU32 value) { nvapiNativeType->version = value; }
+ }
+
+ property NvU16 size {
+  NvU16 get() { return nvapiNativeType->size; }
+  void set(NvU16 value){ nvapiNativeType->size = value; }
+ }
+
+ property NvU32 infoType{
+  NvU32 get() { return nvapiNativeType->infoType; }
+  void set(NvU32 value){ nvapiNativeType->infoType = value; }
+ }
+
+ property NvU32 connectorType{
+  NvU32 get() { return nvapiNativeType->connectorType; }
+  void set(NvU32 value){ nvapiNativeType->connectorType = value; }
+ }
+
+ property NvU8 bIsValidInfo{
+  NvU8 get(){ return nvapiNativeType->bIsValidInfo; }
+  void set(NvU8 value){ nvapiNativeType->bIsValidInfo = value; }
+ }
+
+ property NvDn_MONITOR_CAPS_VSDB^ vsdb{
+  NvDn_MONITOR_CAPS_VSDB^ get(){ return gcnew NvDn_MONITOR_CAPS_VSDB(&nvapiNativeType->data.vsdb); }
+  void set(NvDn_MONITOR_CAPS_VSDB^ value){ nvapiNativeType->data.vsdb = value->nvapiNativePointer[0]; }
+ }
+
+ property NvDn_MONITOR_CAPS_VCDB^ vcdb{
+  NvDn_MONITOR_CAPS_VCDB^ get(){ return gcnew NvDn_MONITOR_CAPS_VCDB(&nvapiNativeType->data.vcdb); }
+  void set(NvDn_MONITOR_CAPS_VCDB^ value){ nvapiNativeType->data.vcdb = value->nvapiNativePointer[0]; }
+ }
+
 };

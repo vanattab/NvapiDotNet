@@ -13,12 +13,11 @@ Class MainWindow
     Dim colorData As New NvDn_COLOR_DATA
     Dim pGPUs As NvDn_PhysicalGpuHandle()
     NvDn.NvDn_EnumPhysicalGPUs(pGPUs)
-    Dim valT As Int32
+    Dim valT As UInt32
     NvDn.NvDn_Disp_GetGDIPrimaryDisplayId(valT)
     'NvDn.NvDn_Disp_GetDisplayIdByDisplayName("", valT)
     'NvDn.NvDn_SYS_GetDisplayIdFromGpuAndOutputId(pGPUs(0), 0, valT)
     Console.WriteLine(EnumHelper.GetDesciption(NvDn.NvDn_Disp_ColorControl(valT, colorData)))
-
   End Sub
 
   Private Sub Button_Click(sender As Object, e As RoutedEventArgs)
@@ -92,5 +91,9 @@ Class MainWindow
   Private Sub MenuItem_Click(sender As Object, e As RoutedEventArgs)
     Dim wrapperWin As New NvAPIWrapperGen()
     wrapperWin.Show()
+  End Sub
+
+  Private Sub Button_Click_4(sender As Object, e As RoutedEventArgs)
+    NvDn.NvDn_TEST()
   End Sub
 End Class
