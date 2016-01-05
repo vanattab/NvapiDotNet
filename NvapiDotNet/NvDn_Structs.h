@@ -1,13 +1,13 @@
 #pragma once
-#include "nvapi.h"
+#include "Stdafx.h"
 
 
-public ref class NvDn_STEREO_CAPS{
+public ref class Nvdn_STEREO_CAPS{
 private:
   NVAPI_STEREO_CAPS* nCaps;
 public:
 
-  NvDn_STEREO_CAPS(NVAPI_STEREO_CAPS* nvapiCaps){
+  Nvdn_STEREO_CAPS(NVAPI_STEREO_CAPS* nvapiCaps){
     nCaps = nvapiCaps;
   }
   property NvU32 version {

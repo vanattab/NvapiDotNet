@@ -2,8 +2,7 @@
 
 #include "stdafx.h"
 #include "NvapiDotNet.h"
-#include "NvDn_Stereo.h"
-#include "NvDn_Disp.h"
+#include "Nvdn.h"
 
 
 //using namespace std;
@@ -13,117 +12,117 @@ using namespace System::Runtime::InteropServices;
 
 namespace NvapiDotNet {
 
-  public ref class NvDn
+  public ref class Nvdn3
   {
-    // TODO: Add your methods for this class here.
+  //  // TODO: Add your methods for this class here.
   public:
-    static NvDn_Status NvDn_Initialize() {
-      #ifdef _DEBUG
-      debugLogStream = File::AppendText("NvDn_Log.txt");
-      #endif
-      return nCall(NvAPI_Initialize());
-    }
+  //  static Nvdn_Status Nvdn_Initialize() {
+  //    #ifdef _DEBUG
+  //    debugLogStream = File::AppendText("Nvdn_Log.txt");
+  //    #endif
+  //    return nCall(NvAPI_Initialize());
+  //  }
 
-    static NvDn_Status NvDn_Unload() {
-      return nCall(NvAPI_Unload());
-    }
+  //  static Nvdn_Status Nvdn_Unload() {
+  //    return nCall(NvAPI_Unload());
+  //  }
 
 
-    // *** Stereo Calls *** ///
-    static NvDn_STEREO_CAPS^ NvDn_Stereo_GetStereoCaps(NvDn_MonitorHandle^ hMon) {
-      NVAPI_STEREO_CAPS* nCaps = new NVAPI_STEREO_CAPS;
-      NVAPI_STEREO_CAPS* nCaps2 = new NVAPI_STEREO_CAPS();
-      NvDn_Status status = nCall(NvAPI_Stereo_GetStereoSupport((NvMonitorHandle)hMon->ToPointer(), nCaps));
-      return gcnew NvDn_STEREO_CAPS(nCaps);
-    }
+  //  // *** Stereo Calls *** ///
+  //  static Nvdn_STEREO_CAPS^ Nvdn_Stereo_GetStereoCaps(Nvdn_MonitorHandle^ hMon) {
+  //    NVAPI_STEREO_CAPS* nCaps = new NVAPI_STEREO_CAPS;
+  //    NVAPI_STEREO_CAPS* nCaps2 = new NVAPI_STEREO_CAPS();
+  //    Nvdn_Status status = nCall(NvAPI_Stereo_GetStereoSupport((NvMonitorHandle)hMon->ToPointer(), nCaps));
+  //    return gcnew Nvdn_STEREO_CAPS(nCaps);
+  //  }
 
-    static NvDn_Status NvDn_Stereo_Enable(){
-      return nCall(NvAPI_Stereo_Enable());
-    }
+  //  static Nvdn_Status Nvdn_Stereo_Enable(){
+  //    return nCall(NvAPI_Stereo_Enable());
+  //  }
 
-    static NvDn_Status NvDn_Stereo_Disable(){
-      return nCall(NvAPI_Stereo_Disable());
-    }
+  //  static Nvdn_Status Nvdn_Stereo_Disable(){
+  //    return nCall(NvAPI_Stereo_Disable());
+  //  }
 
-    static NvDn_Status NvDn_Stereo_CaptureJpegImage(NvDn_StereoHandle^ sHand, unsigned int jpegQuality0to100){
-      return nCall(NvAPI_Stereo_CaptureJpegImage((StereoHandle)sHand->ToPointer(), jpegQuality0to100));
-    }
+  //  static Nvdn_Status Nvdn_Stereo_CaptureJpegImage(Nvdn_StereoHandle^ sHand, unsigned int jpegQuality0to100){
+  //    return nCall(NvAPI_Stereo_CaptureJpegImage((StereoHandle)sHand->ToPointer(), jpegQuality0to100));
+  //  }
 
-    static NvDn_Status NvDn_Stereo_CapturePngImage(NvDn_StereoHandle^ sHand){
-      return nCall(NvAPI_Stereo_CapturePngImage((StereoHandle)sHand->ToPointer()));
-    }
+  //  static Nvdn_Status Nvdn_Stereo_CapturePngImage(Nvdn_StereoHandle^ sHand){
+  //    return nCall(NvAPI_Stereo_CapturePngImage((StereoHandle)sHand->ToPointer()));
+  //  }
 
-    static NvDn_Status NvDn_Stereo_CreateHandleFromD3D_Device_Pointer(IntPtr^ pD3dDevice, NvDn_StereoHandle^% pStereoHand){
-     //return nCall(NvAPI_Stereo_CreateHandleFromIUnknown((IUnknown*)pD3dDevice->ToPointer(), (StereoHandle*)(pStereoHand->ToPointer())));
-     StereoHandle sHand;
-     NvDn_Status status = nCall(NvAPI_Stereo_CreateHandleFromIUnknown((IUnknown*)pD3dDevice->ToPointer(), &sHand));
-     pStereoHand = gcnew NvDn_StereoHandle(sHand);
-     return status;
-    }
+  //  static Nvdn_Status Nvdn_Stereo_CreateHandleFromD3D_Device_Pointer(IntPtr^ pD3dDevice, Nvdn_StereoHandle^% pStereoHand){
+  //   //return nCall(NvAPI_Stereo_CreateHandleFromIUnknown((IUnknown*)pD3dDevice->ToPointer(), (StereoHandle*)(pStereoHand->ToPointer())));
+  //   StereoHandle sHand;
+  //   Nvdn_Status status = nCall(NvAPI_Stereo_CreateHandleFromIUnknown((IUnknown*)pD3dDevice->ToPointer(), &sHand));
+  //   pStereoHand = gcnew Nvdn_StereoHandle(sHand);
+  //   return status;
+  //  }
 
-    static NvDn_Status NvDn_Stereo_DestroyHandle(NvDn_StereoHandle^ sHand){
-      return nCall(NvAPI_Stereo_DestroyHandle((StereoHandle)sHand->ToPointer()));
-    }
+  //  static Nvdn_Status Nvdn_Stereo_DestroyHandle(Nvdn_StereoHandle^ sHand){
+  //    return nCall(NvAPI_Stereo_DestroyHandle((StereoHandle)sHand->ToPointer()));
+  //  }
 
-    static NvDn_Status NvDn_Stereo_Activate(NvDn_StereoHandle^ sHand){
-      return nCall(NvAPI_Stereo_Activate(sHand));
-    }
-    
-    static NvDn_Status NvDn_Stereo_Deactivate(NvDn_StereoHandle^ sHand){
-     void* sH = sHand->ToPointer();
-      return nCall(NvAPI_Stereo_Deactivate(sH));
-    }
-    
-    static NvDn_Status NvDn_Stereo_Debug_WasLastDrawStereoized(NvDn_StereoHandle^ sHand, Byte% wasStereo){
-      NvU8 val;
-      NvDn_Status status = nCall(NvAPI_Stereo_Debug_WasLastDrawStereoized((StereoHandle)sHand->ToPointer(), &val));
-      wasStereo = val;
-      return status;
-    }
-    
-    static NvDn_Status NvDn_Stereo_CreateConfigurationProfileRegistryKey(NvDn_STEREO_REGISTRY_PROFILE_TYPE regProType){
-      return nCall(NvAPI_Stereo_CreateConfigurationProfileRegistryKey((NV_STEREO_REGISTRY_PROFILE_TYPE)regProType));
-    }
+  //  static Nvdn_Status Nvdn_Stereo_Activate(Nvdn_StereoHandle^ sHand){
+  //    return nCall(NvAPI_Stereo_Activate(sHand));
+  //  }
+  //  
+  //  static Nvdn_Status Nvdn_Stereo_Deactivate(Nvdn_StereoHandle^ sHand){
+  //   void* sH = sHand->ToPointer();
+  //    return nCall(NvAPI_Stereo_Deactivate(sH));
+  //  }
+  //  
+  //  static Nvdn_Status Nvdn_Stereo_Debug_WasLastDrawStereoized(Nvdn_StereoHandle^ sHand, Byte% wasStereo){
+  //    NvU8 val;
+  //    Nvdn_Status status = nCall(NvAPI_Stereo_Debug_WasLastDrawStereoized((StereoHandle)sHand->ToPointer(), &val));
+  //    wasStereo = val;
+  //    return status;
+  //  }
+  //  
+  //  static Nvdn_Status Nvdn_Stereo_CreateConfigurationProfileRegistryKey(Nvdn_STEREO_REGISTRY_PROFILE_TYPE regProType){
+  //    return nCall(NvAPI_Stereo_CreateConfigurationProfileRegistryKey((NV_STEREO_REGISTRY_PROFILE_TYPE)regProType));
+  //  }
 
-    static NvDn_Status NvDn_Stereo_DeleteConfigurationProfileRegistryKey(NvDn_STEREO_REGISTRY_PROFILE_TYPE regProType){
-     return nCall(NvAPI_Stereo_DeleteConfigurationProfileRegistryKey((NV_STEREO_REGISTRY_PROFILE_TYPE)regProType));
-    }
+  //  static Nvdn_Status Nvdn_Stereo_DeleteConfigurationProfileRegistryKey(Nvdn_STEREO_REGISTRY_PROFILE_TYPE regProType){
+  //   return nCall(NvAPI_Stereo_DeleteConfigurationProfileRegistryKey((NV_STEREO_REGISTRY_PROFILE_TYPE)regProType));
+  //  }
 
-    static NvDn_Status NvDn_Stereo_SetConfigurationProfileValue(NvDn_STEREO_REGISTRY_PROFILE_TYPE regProType, NV_STEREO_REGISTRY_ID valueRegistryID, IntPtr pValue){
-     return nCall(NvAPI_Stereo_SetConfigurationProfileValue((NV_STEREO_REGISTRY_PROFILE_TYPE)regProType, valueRegistryID, pValue.ToPointer()));
-    }
+  //  static Nvdn_Status Nvdn_Stereo_SetConfigurationProfileValue(Nvdn_STEREO_REGISTRY_PROFILE_TYPE regProType, NV_STEREO_REGISTRY_ID valueRegistryID, IntPtr pValue){
+  //   return nCall(NvAPI_Stereo_SetConfigurationProfileValue((NV_STEREO_REGISTRY_PROFILE_TYPE)regProType, valueRegistryID, pValue.ToPointer()));
+  //  }
 
-    static NvDn_Status NvDn_Stereo_InitActivation(NvDn_StereoHandle^ sHand, NvDn_STEREO_INIT_ACTIVATION_FLAGS flags){
-      return nCall(NvAPI_Stereo_InitActivation((StereoHandle)sHand->ToPointer(), (NVAPI_STEREO_INIT_ACTIVATION_FLAGS) flags));
-    }
+  //  static Nvdn_Status Nvdn_Stereo_InitActivation(Nvdn_StereoHandle^ sHand, Nvdn_STEREO_INIT_ACTIVATION_FLAGS flags){
+  //    return nCall(NvAPI_Stereo_InitActivation((StereoHandle)sHand->ToPointer(), (NVAPI_STEREO_INIT_ACTIVATION_FLAGS) flags));
+  //  }
 
-    static NvDn_Status NvDn_Stereo_SetDriverMode(NV_STEREO_DRIVER_MODE mode){
-      return nCall(NvAPI_Stereo_SetDriverMode(mode));
-    }
+  //  static Nvdn_Status Nvdn_Stereo_SetDriverMode(NV_STEREO_DRIVER_MODE mode){
+  //    return nCall(NvAPI_Stereo_SetDriverMode(mode));
+  //  }
 
-    static NvDn_Status NvDn_Stereo_IsEnabled(Byte%  isEnabled){
-     NvU8 val;
-     NvDn_Status status = nCall(NvAPI_Stereo_IsEnabled(&val));
-      isEnabled = val;
-      return status;
-    }
+  //  static Nvdn_Status Nvdn_Stereo_IsEnabled(Byte%  isEnabled){
+  //   NvU8 val;
+  //   Nvdn_Status status = nCall(NvAPI_Stereo_IsEnabled(&val));
+  //    isEnabled = val;
+  //    return status;
+  //  }
 
-    static NvDn_Status NvDn_Stereo_IsActivted(NvDn_StereoHandle^ sHand, Byte% isActivated){
-      NvU8 val;
-      NvDn_Status status = nCall(NvAPI_Stereo_IsActivated((StereoHandle)sHand->ToPointer(), &val));
-      isActivated = val;
-      return status;
-    }
+  //  static Nvdn_Status Nvdn_Stereo_IsActivted(Nvdn_StereoHandle^ sHand, Byte% isActivated){
+  //    NvU8 val;
+  //    Nvdn_Status status = nCall(NvAPI_Stereo_IsActivated((StereoHandle)sHand->ToPointer(), &val));
+  //    isActivated = val;
+  //    return status;
+  //  }
 
-    static NvDn_Status NvDn_Stereo_GetConvergence(NvDn_StereoHandle^ sHand, float% pConvergence){
-      float nConverge;
-      NvDn_Status status =  nCall(NvAPI_Stereo_GetConvergence((StereoHandle)sHand->ToPointer(), &nConverge));
-      pConvergence = nConverge;
-      return status;
-    }
+  //  static Nvdn_Status Nvdn_Stereo_GetConvergence(Nvdn_StereoHandle^ sHand, float% pConvergence){
+  //    float nConverge;
+  //    Nvdn_Status status =  nCall(NvAPI_Stereo_GetConvergence((StereoHandle)sHand->ToPointer(), &nConverge));
+  //    pConvergence = nConverge;
+  //    return status;
+  //  }
 
     //Display CALLS
-    static void NvDnTestCodeFunction(){
+    static void NvdnTestCodeFunction(){
      //NvAPI_CreateDisplayFromUnAttachedDisplay(NvUnAttachedDisplayHandle hNvUnattachedDisplay, NvDisplayHandle* pNvDisplay);
      //NvAPI_D3D9_AliasSurfaceAsTexture(IDirect3DDevice9* pDev, IDirect3DSurface9 *pSurface, IDirect3DTexture9 **ppTexture, DWORD dwFlag);
      //NvAPI_Disp_ColorControl(NvU32 displayID, );
@@ -141,77 +140,74 @@ namespace NvapiDotNet {
      //NvAPI_DISP_SaveCustomDisplay;
      //NvAPI_DISP_SetDisplayConfig;
      //NvAPI_DISP_TryCustomDisplay;
-     NvUnAttachedDisplayHandle g;
-     NvUnAttachedDisplayHandle__* b;
-     NvUnAttachedDisplayHandle* c;
+     
+
+
+     //NvUnAttachedDisplayHandle g;
+     //NvUnAttachedDisplayHandle__* b;
+     //NvUnAttachedDisplayHandle* c;
     }
 
 
-    // Non API CODED FUCNTION CALLS
-    static NvDn_Status NvDn_CreateDisplayFromUnAttachedDisplay(NvDn_UnAttachedDisplayHandle^ uadHand, NvDn_DisplayHandle^% dHand){
-     NvDisplayHandle nDispHand;
-     NvDn_Status status = nCall(NvAPI_CreateDisplayFromUnAttachedDisplay(uadHand, &nDispHand));
-     dHand = gcnew NvDn_DisplayHandle(nDispHand);
-     return status;
-    }
+
     
-    static NvDn_Status NvDn_Disp_ColorControl(NvU32 displayID, NvDn_COLOR_DATA^% colorDataOut){
+    static Nvdn_Status Nvdn_Disp_ColorControl(NvU32 displayID, Nvdn_COLOR_DATA^% colorDataOut){
      return nCall(NvAPI_Disp_ColorControl(displayID, colorDataOut->nColorData));
     }
 
 
-    static NvDn_Status NvDn_EnumPhysicalGPUs(array<NvDn_PhysicalGpuHandle^>^% gpuArray){
-     NvPhysicalGpuHandle pHandles[NVAPI_MAX_PHYSICAL_GPUS];
-     NvU32 count;
-     NvDn_Status status = nCall(NvAPI_EnumPhysicalGPUs(pHandles, &count));
-     gpuArray = gcnew array < NvDn_PhysicalGpuHandle^ >(count);
-     for (int i = 0; i < count; i++)
-      gpuArray[i] = gcnew NvDn_PhysicalGpuHandle(pHandles[i]);
-     NvU32 id;
-     status = nCall(NvAPI_SYS_GetDisplayIdFromGpuAndOutputId(pHandles[0], 0, &id));
-     return status;
+    static Nvdn_Status Nvdn_EnumPhysicalGPUs(array<NvdnPhysicalGpuHandle^>^% gpuArray){
+     //NvPhysicalGpuHandle pHandles[NVAPI_MAX_PHYSICAL_GPUS];
+     //NvU32 count;
+     //Nvdn_Status status = nCall(NvAPI_EnumPhysicalGPUs(pHandles, &count));
+     //gpuArray = gcnew array < NvdnPhysicalGpuHandle^ >(count);
+     //for (NvU32 i = 0; i < count; i++)
+     // gpuArray[i] = gcnew NvdnPhysicalGpuHandle(pHandles[i]);
+     //NvU32 id;
+     //status = nCall(NvAPI_SYS_GetDisplayIdFromGpuAndOutputId(pHandles[0], 0, &id));
+     return (Nvdn_Status)-1;
     }
 
-    static NvDn_Status NvDn_SYS_GetDisplayIdFromGpuAndOutputId(NvDn_PhysicalGpuHandle^ phyHand, NvU32 outputID, NvU32^ displayID){
+    static Nvdn_Status Nvdn_SYS_GetDisplayIdFromGpuAndOutputId(NvdnPhysicalGpuHandle^ phyHand, NvU32 outputID, NvU32^ displayID){
      NvU32 id;
-     NvDn_Status status = nCall(NvAPI_SYS_GetDisplayIdFromGpuAndOutputId(phyHand, outputID, &id));
+     Nvdn_Status status = nCall(NvAPI_SYS_GetDisplayIdFromGpuAndOutputId(phyHand, outputID, &id));
      displayID = id;
      return status;
     }
 
-    static NvDn_Status NvDn_Disp_GetDisplayIdByDisplayName(String^ name, NvU32^ displayId){
+    static Nvdn_Status Nvdn_Disp_GetDisplayIdByDisplayName(String^ name, NvU32^ displayId){
      NvU32 id;
-     NvDn_Status s =nCall( NvAPI_DISP_GetDisplayIdByDisplayName("\\DISPLAY1", &id));
+     Nvdn_Status s =nCall( NvAPI_DISP_GetDisplayIdByDisplayName("\\DISPLAY1", &id));
      displayId = id;
      return s;
     }
 
-    static NvDn_Status NvDn_Disp_GetGDIPrimaryDisplayId(NvU32^% displayID){
+    static Nvdn_Status Nvdn_Disp_GetGDIPrimaryDisplayId(NvU32^% displayID){
      NvU32 id;
-     NvDn_Status s = nCall(NvAPI_DISP_GetGDIPrimaryDisplayId(&id));
+     Nvdn_Status s = nCall(NvAPI_DISP_GetGDIPrimaryDisplayId(&id));
      displayID = id;
      return s;
     }
 
-    static NvDn_Status NvDn_Disp_GetMonitorCapabilities(NvU32 displayID, NvDn_MONITOR_CAPABILITIES^% caps){
-     NvDn_Status s = nCall(NvAPI_DISP_GetMonitorCapabilities(displayID, caps));
+    static Nvdn_Status Nvdn_Disp_GetMonitorCapabilities(NvU32 displayID, Nvdn_MONITOR_CAPABILITIES^% caps){
+     Nvdn_Status s = nCall(NvAPI_DISP_GetMonitorCapabilities(displayID, caps));
       return s;
     }
 
-    static void NvDn_TEST(){
-     NV_MONITOR_CONN_TYPE t;
+    static void Nvdn_TEST(){
+     //NV_MONITOR_CONN_TYPE t;
      NvAPI_Initialize();
      NV_MONITOR_CAPABILITIES cData;
      cData.version = NV_MONITOR_CAPABILITIES_VER;
      NvU32 dispID;
      NvAPI_Status s = NvAPI_DISP_GetGDIPrimaryDisplayId(&dispID);
-     //s = NvAPI_DISP_GetMonitorCapabilities(dispID, &cData);
+     s = NvAPI_DISP_GetMonitorCapabilities(dispID, &cData);
 
-     NvU32 capsCount =0;
+     NvU32 capsCount =0 ;
      s= NvAPI_DISP_GetMonitorColorCapabilities(dispID, NULL, &capsCount);
      NV_MONITOR_COLOR_CAPS* monColorCaps;
      monColorCaps = new NV_MONITOR_COLOR_CAPS[capsCount];
-     for (int i = 0; i < capsCount; i++)
+     for (NvU32 i = 0; i < capsCount; i++)
       monColorCaps[i].version = NV_MONITOR_COLOR_CAPS_VER;
      s= NvAPI_DISP_GetMonitorColorCapabilities(dispID, monColorCaps, &capsCount);
 
@@ -238,11 +234,11 @@ namespace NvapiDotNet {
      //NvAPI_DISP_TryCustomDisplay; 
 
   private:
-    static NvDn_Status nCall(NvAPI_Status nativeNvapiCall) {
+    static Nvdn_Status nCall(NvAPI_Status nativeNvapiCall) {
 #     ifdef _DEBUG
       debugLogStream->WriteLine(nativeNvapiCall);
 #     endif
-      return static_cast<NvDn_Status>(nativeNvapiCall);
+      return static_cast<Nvdn_Status>(nativeNvapiCall);
     }
     static StreamWriter^ debugLogStream;
   };

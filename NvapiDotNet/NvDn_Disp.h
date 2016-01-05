@@ -1,8 +1,7 @@
 #pragma once
 #include "Stdafx.h"
-#include "EnumHelper.h"
 
-public enum class NvDn_COLOR_CMD
+public enum class Nvdn_COLOR_CMD
 {
  NV_COLOR_CMD_GET = 1,
  NV_COLOR_CMD_SET,
@@ -11,7 +10,7 @@ public enum class NvDn_COLOR_CMD
 } ;
 
 //!  See Table 14 of CEA-861E.  Not all of this is supported by the GPU.
-public enum class NvDn_COLOR_FORMAT
+public enum class Nvdn_COLOR_FORMAT
 {
  NV_COLOR_FORMAT_RGB = 0,
  NV_COLOR_FORMAT_YUV422,
@@ -21,7 +20,7 @@ public enum class NvDn_COLOR_FORMAT
  NV_COLOR_FORMAT_AUTO = 0xFF
 } ;
 
-public enum class NvDn_COLOR_COLORIMETRY
+public enum class Nvdn_COLOR_COLORIMETRY
 {
  NV_COLOR_COLORIMETRY_RGB = 0,
  NV_COLOR_COLORIMETRY_YCC601,
@@ -39,7 +38,7 @@ public enum class NvDn_COLOR_COLORIMETRY
  NV_COLOR_COLORIMETRY_AUTO = 0xFF
 } ;
 
-public enum class NvDn_DYNAMIC_RANGE
+public enum class Nvdn_DYNAMIC_RANGE
 {
  NV_DYNAMIC_RANGE_VESA = 0x0,
  NV_DYNAMIC_RANGE_CEA = 0x1,
@@ -47,7 +46,7 @@ public enum class NvDn_DYNAMIC_RANGE
  NV_DYNAMIC_RANGE_AUTO = 0xFF
 };
 
-public enum class NvDn_BPC
+public enum class Nvdn_BPC
 {
  NV_BPC_DEFAULT = 0,
  NV_BPC_6 = 1,
@@ -59,26 +58,26 @@ public enum class NvDn_BPC
 
 // Color Structs useing in DISP API
 
-public ref class NvDn_COLOR_DATA{
+public ref class Nvdn_COLOR_DATA{
 private:
 public:
  NV_COLOR_DATA* nColorData;
  
- NvDn_COLOR_DATA(){
+ Nvdn_COLOR_DATA(){
   nColorData = new NV_COLOR_DATA();
   nColorData->version = NV_COLOR_DATA_VER;
  }
 
- NvDn_COLOR_DATA(NV_COLOR_DATA* NvAPIColorData){
+ Nvdn_COLOR_DATA(NV_COLOR_DATA* NvAPIColorData){
   nColorData = NvAPIColorData;
  }
 
- ~NvDn_COLOR_DATA(){
+ ~Nvdn_COLOR_DATA(){
   if (nColorData)
    delete nColorData;
  }
 
- !NvDn_COLOR_DATA(){
+ !Nvdn_COLOR_DATA(){
   if (nColorData)
    delete nColorData;
  }
@@ -93,24 +92,24 @@ public:
   void set(NvU16 value){ nColorData->size = value; }
  }
 
- property NvDn_COLOR_CMD cmd{
-  NvDn_COLOR_CMD get(){ return (NvDn_COLOR_CMD)nColorData->cmd; }
-  void set(NvDn_COLOR_CMD value){ nColorData->cmd = (NV_COLOR_CMD)value; }
+ property Nvdn_COLOR_CMD cmd{
+  Nvdn_COLOR_CMD get(){ return (Nvdn_COLOR_CMD)nColorData->cmd; }
+  void set(Nvdn_COLOR_CMD value){ nColorData->cmd = (NV_COLOR_CMD)value; }
  }
 
- property NvDn_COLOR_FORMAT colorFormat{
-  NvDn_COLOR_FORMAT get(){ return (NvDn_COLOR_FORMAT)nColorData->data.colorFormat; }
-  void set(NvDn_COLOR_FORMAT value){ nColorData->data.colorFormat = (NV_COLOR_FORMAT)value; }
+ property Nvdn_COLOR_FORMAT colorFormat{
+  Nvdn_COLOR_FORMAT get(){ return (Nvdn_COLOR_FORMAT)nColorData->data.colorFormat; }
+  void set(Nvdn_COLOR_FORMAT value){ nColorData->data.colorFormat = (NV_COLOR_FORMAT)value; }
  }
 
- property NvDn_COLOR_COLORIMETRY colorimetry{
-  NvDn_COLOR_COLORIMETRY get(){ return (NvDn_COLOR_COLORIMETRY)nColorData->data.colorimetry; }
-  void set(NvDn_COLOR_COLORIMETRY value){ nColorData->data.colorimetry = (NV_COLOR_COLORIMETRY)value; }
+ property Nvdn_COLOR_COLORIMETRY colorimetry{
+  Nvdn_COLOR_COLORIMETRY get(){ return (Nvdn_COLOR_COLORIMETRY)nColorData->data.colorimetry; }
+  void set(Nvdn_COLOR_COLORIMETRY value){ nColorData->data.colorimetry = (NV_COLOR_COLORIMETRY)value; }
  }
 
- property NvDn_DYNAMIC_RANGE dynamicRange{
-  NvDn_DYNAMIC_RANGE  get(){ return (NvDn_DYNAMIC_RANGE)nColorData->data.dynamicRange; }
-  void set(NvDn_DYNAMIC_RANGE value){ nColorData->data.dynamicRange = (NV_DYNAMIC_RANGE)value; }
+ property Nvdn_DYNAMIC_RANGE dynamicRange{
+  Nvdn_DYNAMIC_RANGE  get(){ return (Nvdn_DYNAMIC_RANGE)nColorData->data.dynamicRange; }
+  void set(Nvdn_DYNAMIC_RANGE value){ nColorData->data.dynamicRange = (NV_DYNAMIC_RANGE)value; }
  }
 
  property NV_BPC bpc{
@@ -122,25 +121,25 @@ public:
 };
 
 // MONITOR CAPS
-public ref class NvDn_MONITOR_CAPS_VCDB
+public ref class Nvdn_MONITOR_CAPS_VCDB
 {
 public:
  NV_MONITOR_CAPS_VCDB* nvapiNativePointer;
 
- NvDn_MONITOR_CAPS_VCDB(){
+ Nvdn_MONITOR_CAPS_VCDB(){
   nvapiNativePointer = new NV_MONITOR_CAPS_VCDB();
  }
 
- NvDn_MONITOR_CAPS_VCDB(NV_MONITOR_CAPS_VCDB* NvAPIColorData){
+ Nvdn_MONITOR_CAPS_VCDB(NV_MONITOR_CAPS_VCDB* NvAPIColorData){
   nvapiNativePointer = NvAPIColorData;
  }
 
- ~NvDn_MONITOR_CAPS_VCDB(){
+ ~Nvdn_MONITOR_CAPS_VCDB(){
   if (nvapiNativePointer)
    delete nvapiNativePointer;
  }
 
- !NvDn_MONITOR_CAPS_VCDB(){
+ !Nvdn_MONITOR_CAPS_VCDB(){
   if (nvapiNativePointer)
    delete nvapiNativePointer;
  }
@@ -177,25 +176,25 @@ public:
 
 
 //! See NvAPI_DISP_GetMonitorCapabilities().
-public ref class NvDn_MONITOR_CAPS_VSDB
+public ref class Nvdn_MONITOR_CAPS_VSDB
 {
 public:
  NV_MONITOR_CAPS_VSDB* nvapiNativePointer;
 
- NvDn_MONITOR_CAPS_VSDB(){
+ Nvdn_MONITOR_CAPS_VSDB(){
   nvapiNativePointer = new NV_MONITOR_CAPS_VSDB();
  }
 
- NvDn_MONITOR_CAPS_VSDB(NV_MONITOR_CAPS_VSDB* NvAPIColorData){
+ Nvdn_MONITOR_CAPS_VSDB(NV_MONITOR_CAPS_VSDB* NvAPIColorData){
   nvapiNativePointer = NvAPIColorData;
  }
 
- ~NvDn_MONITOR_CAPS_VSDB(){
+ ~Nvdn_MONITOR_CAPS_VSDB(){
   if (nvapiNativePointer)
    delete nvapiNativePointer;
  }
 
- !NvDn_MONITOR_CAPS_VSDB(){
+ !Nvdn_MONITOR_CAPS_VSDB(){
   if (nvapiNativePointer)
    delete nvapiNativePointer;
  }
@@ -341,25 +340,25 @@ public:
  }
 };
 
-public ref class NvDn_MONITOR_CAPABILITIES{
+public ref class Nvdn_MONITOR_CAPABILITIES{
 public:
 
  NV_MONITOR_CAPABILITIES* nvapiNativeType;
- NvDn_MONITOR_CAPABILITIES(NV_MONITOR_CAPABILITIES* nvapiCaps){
+ Nvdn_MONITOR_CAPABILITIES(NV_MONITOR_CAPABILITIES* nvapiCaps){
   nvapiNativeType = nvapiCaps;
  }
 
- NvDn_MONITOR_CAPABILITIES(){
+ Nvdn_MONITOR_CAPABILITIES(){
   nvapiNativeType = new NV_MONITOR_CAPABILITIES();
   nvapiNativeType->version = NV_MONITOR_CAPABILITIES_VER;
  }
 
- ~NvDn_MONITOR_CAPABILITIES(){
+ ~Nvdn_MONITOR_CAPABILITIES(){
   if (nvapiNativeType)
    delete nvapiNativeType;
  }
 
- !NvDn_MONITOR_CAPABILITIES(){
+ !Nvdn_MONITOR_CAPABILITIES(){
   if (nvapiNativeType)
    delete nvapiNativeType;
  }
@@ -393,14 +392,14 @@ public:
   void set(NvU8 value){ nvapiNativeType->bIsValidInfo = value; }
  }
 
- property NvDn_MONITOR_CAPS_VSDB^ vsdb{
-  NvDn_MONITOR_CAPS_VSDB^ get(){ return gcnew NvDn_MONITOR_CAPS_VSDB(&nvapiNativeType->data.vsdb); }
-  void set(NvDn_MONITOR_CAPS_VSDB^ value){ nvapiNativeType->data.vsdb = value->nvapiNativePointer[0]; }
+ property Nvdn_MONITOR_CAPS_VSDB^ vsdb{
+  Nvdn_MONITOR_CAPS_VSDB^ get(){ return gcnew Nvdn_MONITOR_CAPS_VSDB(&nvapiNativeType->data.vsdb); }
+  void set(Nvdn_MONITOR_CAPS_VSDB^ value){ nvapiNativeType->data.vsdb = value->nvapiNativePointer[0]; }
  }
 
- property NvDn_MONITOR_CAPS_VCDB^ vcdb{
-  NvDn_MONITOR_CAPS_VCDB^ get(){ return gcnew NvDn_MONITOR_CAPS_VCDB(&nvapiNativeType->data.vcdb); }
-  void set(NvDn_MONITOR_CAPS_VCDB^ value){ nvapiNativeType->data.vcdb = value->nvapiNativePointer[0]; }
+ property Nvdn_MONITOR_CAPS_VCDB^ vcdb{
+  Nvdn_MONITOR_CAPS_VCDB^ get(){ return gcnew Nvdn_MONITOR_CAPS_VCDB(&nvapiNativeType->data.vcdb); }
+  void set(Nvdn_MONITOR_CAPS_VCDB^ value){ nvapiNativeType->data.vcdb = value->nvapiNativePointer[0]; }
  }
 
 };

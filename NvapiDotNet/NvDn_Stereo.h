@@ -1,8 +1,7 @@
 #pragma once
-#include"EnumHelper.h"
 
 //! InitActivation Flags
-public enum class NvDn_STEREO_INIT_ACTIVATION_FLAGS
+public enum class Nvdn_STEREO_INIT_ACTIVATION_FLAGS
 {
   [EnumDescriptionAttribute("NVAPI_STEREO_INIT_ACTIVATION_IMMEDIATE: ")]
   NVAPI_STEREO_INIT_ACTIVATION_IMMEDIATE = 0X00,
@@ -11,7 +10,7 @@ public enum class NvDn_STEREO_INIT_ACTIVATION_FLAGS
 };
 
 //! Used in NvAPI_Stereo_CreateConfigurationProfileRegistryKey()
-public enum class NvDn_STEREO_REGISTRY_PROFILE_TYPE
+public enum class Nvdn_STEREO_REGISTRY_PROFILE_TYPE
 {
  [EnumDescriptionAttribute("NVAPI_STEREO_DEFAULT_REGISTRY_PROFILE:  Default registry configuration profile.")]
  NVAPI_STEREO_DEFAULT_REGISTRY_PROFILE, //!< Default registry configuration profile.
@@ -20,3 +19,4 @@ public enum class NvDn_STEREO_REGISTRY_PROFILE_TYPE
  [EnumDescriptionAttribute("NVAPI_STEREO_DX10_REGISTRY_PROFILE: Separate registry configuration profile for a DirectX 10 executable.")]
  NVAPI_STEREO_DX10_REGISTRY_PROFILE     //!< Separate registry configuration profile for a DirectX 10 executable.
 };
+

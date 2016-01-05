@@ -1,7 +1,6 @@
 #pragma once
-#include "EnumHelper.h"
 
-public enum struct NvDn_Status{
+public enum struct Nvdn_Status{
     [EnumDescriptionAttribute("NVAPI_OK: Success. Request is completed.")] 
     NVAPI_OK = 0,      //!< Success. Request is completed.
     [EnumDescriptionAttribute("NVAPI_Error: Generic error code.")]

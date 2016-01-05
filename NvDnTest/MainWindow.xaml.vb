@@ -6,18 +6,19 @@ Imports System.Threading
 
 
 Class MainWindow
-  Public sHand As NvDn_StereoHandle
+  Public sHand As NvdnStereoHandle
+  Public sHand2 As NvDnStereoHandle
   Public monHands() As IntPtr
 
   Private Sub Button_Click_3(sender As Object, e As RoutedEventArgs)
     Dim colorData As New NvDn_COLOR_DATA
-    Dim pGPUs As NvDn_PhysicalGpuHandle()
-    NvDn.NvDn_EnumPhysicalGPUs(pGPUs)
+    Dim pGPUs As NvdnPhysicalGpuHandle()
+    NvDn3.NvDn_EnumPhysicalGPUs(pGPUs)
     Dim valT As UInt32
-    NvDn.NvDn_Disp_GetGDIPrimaryDisplayId(valT)
+    NvDn3.NvDn_Disp_GetGDIPrimaryDisplayId(valT)
     'NvDn.NvDn_Disp_GetDisplayIdByDisplayName("", valT)
     'NvDn.NvDn_SYS_GetDisplayIdFromGpuAndOutputId(pGPUs(0), 0, valT)
-    Console.WriteLine(EnumHelper.GetDesciption(NvDn.NvDn_Disp_ColorControl(valT, colorData)))
+    Console.WriteLine(EnumHelper.GetDesciption(NvDn3.NvDn_Disp_ColorControl(valT, colorData)))
   End Sub
 
   Private Sub Button_Click(sender As Object, e As RoutedEventArgs)
@@ -31,22 +32,22 @@ Class MainWindow
     dThread.Start()
     dw.WaitForInitialization()
 
-    NvCall(NvDn.NvDn_Initialize(), "Initialize() -> ")
+    NvCall(NvDn.Initialize(), "Initialize() -> ")
     'NvCall(NvDn.NvDn_Stereo_Enable(), "Stereo_Enable() -> ")
 
-    Console.WriteLine("Monitors: ")
-    ReDim monHands(dw.D3D_9.AdapterCount - 1)
-    For i As Integer = 0 To dw.D3D_9.AdapterCount - 1
-      Console.WriteLine("Mon: " & i)
-      monHands(i) = dw.D3D_9.GetAdapterMonitor(i)
-      Dim caps As NvDn_STEREO_CAPS = NvDn.NvDn_Stereo_GetStereoCaps(New NvDn_MonitorHandle(monHands(i)))
-      Console.WriteLine("Version: " & caps.version & vbNewLine & "SupportStereoAutomatic: " & caps.supportWindowedModeAutomatic &
-                        "SupportsStereoOff: " & caps.supportWindowedModeOff & "SupportsStereoPersistent: " & caps.supportsWindowedModePersistent)
-      Console.WriteLine("")
-    Next
+    'Console.WriteLine("Monitors: ")
+    'ReDim monHands(dw.D3D_9.AdapterCount - 1)
+    'For i As Integer = 0 To dw.D3D_9.AdapterCount - 1
+    '  Console.WriteLine("Mon: " & i)
+    '  monHands(i) = dw.D3D_9.GetAdapterMonitor(i)
+    '  Dim caps As Nvdn_STEREO_CAPS = Nvdn.Stereo_GetStereoCaps(New NvdnMonitorHandle(monHands(i)))
+    '  Console.WriteLine("Version: " & caps.version & vbNewLine & "SupportStereoAutomatic: " & caps.supportWindowedModeAutomatic &
+    '                    "SupportsStereoOff: " & caps.supportWindowedModeOff & "SupportsStereoPersistent: " & caps.supportsWindowedModePersistent)
+    '  Console.WriteLine("")
+    'Next
 
-    sHand = New NvDn_StereoHandle()
-    NvCall(NvDn.NvDn_Stereo_CreateHandleFromD3D_Device_Pointer(dw.Device.ComPointer, sHand), "Stereo_CreateHandleFromIUnknown")
+    sHand = New NvdnStereoHandle()
+    NvCall(NvDn.Stereo_CreateHandleFromD3D_Device_Pointer(dw.Device.ComPointer, sHand), "Stereo_CreateHandleFromIUnknown")
 
     'Dim b As Boolean
     'NvDn.NvDn_Stereo_IsEnabled(b)
@@ -81,11 +82,11 @@ Class MainWindow
   End Sub
 
   Private Sub Button_Click_1(sender As Object, e As RoutedEventArgs)
-    NvCall(NvDn.NvDn_Stereo_Activate(sHand))
+    NvCall(NvDn.Stereo_Activate(sHand))
   End Sub
 
   Private Sub Button_Click_2(sender As Object, e As RoutedEventArgs)
-    NvCall(NvDn.NvDn_Stereo_Deactivate(sHand))
+    NvCall(NvDn.Stereo_Deactivate(sHand))
   End Sub
 
   Private Sub MenuItem_Click(sender As Object, e As RoutedEventArgs)
@@ -94,6 +95,44 @@ Class MainWindow
   End Sub
 
   Private Sub Button_Click_4(sender As Object, e As RoutedEventArgs)
-    NvDn.NvDn_TEST()
+    'NvDn.NvDn_TEST()
+    pS(NvDn.Initialize(), "Initialize()")
+    Dim s As NvDn_Status = NvDn_Status.NVAPI_OK
+
+  End Sub
+
+  Private Sub pS(s As NvDn_Status, Optional prefix As String = "")
+    If Not prefix = "" Then
+      prefix &= " --> "
+    End If
+    Console.WriteLine(prefix & NvDn.GetErrorMessage(s))
+  End Sub
+
+  Private Sub Button_Click_5(sender As Object, e As RoutedEventArgs)
+    Dim dispS As New DisplaySettings("Test", 50, 25, 1920, 1080, 1000, StereoProtocol.Nvidia_3DVision)
+    Dim display As New Display("Test", "Null", 1, dispS)
+    Dim dc As DisplayConfiguration = DisplayConfiguration.CreateSingleDisplayConfiguration(display)
+    dc.StereoMode = StereoProtocol.Nvidia_3DVision
+    Dim dw As New DisplayWindow(dc)
+
+    Dim dThread As New Thread(AddressOf dw.StartDisplay)
+    dThread.Start()
+    dw.WaitForInitialization()
+
+    'pS(NvDn.Test(), "TEST()")
+    pS(NvDn.Initialize(), "Init")
+    sHand2 = New NvDnStereoHandle
+    pS(NvDn.Stereo_CreateHandleFromD3D_Device_Pointer(dw.Device.ComPointer, sHand), "Create Stereo Handle")
+
+    dw.ShutDownDisplay = True
+  End Sub
+
+  Private Sub Window_Loaded(sender As Object, e As RoutedEventArgs)
+
+
+    'ReDim monHands(D3D_9.AdapterCount - 1)
+    'For i As Integer = 0 To dw.D3D_9.AdapterCount - 1
+    '  monHands(i) = dw.D3D_9.GetAdapterMonitor(i)
+    'Next
   End Sub
 End Class

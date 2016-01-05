@@ -148,12 +148,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EnumHelper.h" />
+    <ClInclude Include="NvDn.h" />
     <ClInclude Include="NvapiDotNet.h" />
     <ClInclude Include="NvDn_Disp.h" />
     <ClInclude Include="NvDn_Enums.h" />
     <ClInclude Include="NvDn_Handles.h" />
     <ClInclude Include="NvDn_Stereo.h" />
     <ClInclude Include="NvDn_Structs.h" />
+    <ClInclude Include="NvDn_Util.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />
   </ItemGroup>
@@ -161,6 +163,9 @@
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="EnumHelper.cpp" />
     <ClCompile Include="NvapiDotNet.cpp" />
+    <ClCompile Include="NvDn_Display_Functions.cpp" />
+    <ClCompile Include="NvDn_GeneralFunctions.cpp" />
+    <ClCompile Include="NvDn_Stereo_Functions.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

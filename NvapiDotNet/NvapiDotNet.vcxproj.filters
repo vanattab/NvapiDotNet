@@ -39,6 +39,15 @@
     <ClInclude Include="NvDn_Stereo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="NvDn_Disp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NvDn.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NvDn_Util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NvapiDotNet.cpp">
@@ -51,6 +60,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EnumHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NvDn_GeneralFunctions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NvDn_Stereo_Functions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NvDn_Display_Functions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
